@@ -17,6 +17,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { useRouter } from 'next/router';
+
+const menuItems = [
+    { text: 'Main Page', path: '/', },
+    { text: 'Track List', path: '/tracks' }
+];
 
 const drawerWidth = 240;
 
@@ -50,6 +56,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function Navbar() {
+    const router = useRouter();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -100,8 +107,8 @@ export default function Navbar() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['Main Page', 'Track List'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {menuItems.map(({ text, path }, index) => (
+                        <ListItem button key={path} onClick={() => router.push(path)} >
                             <ListItemIcon>
                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                             </ListItemIcon>
