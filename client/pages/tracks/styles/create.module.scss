@@ -1,0 +1,9 @@
+.track_description {
+    padding: 0 20px;
+    width: 720px;
+    height: 300px;
+
+    :not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
