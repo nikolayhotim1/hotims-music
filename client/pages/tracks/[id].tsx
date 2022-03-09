@@ -28,7 +28,10 @@ const TrackPage = ({ serverTrack }: any) => {
     };
 
     return (
-        <MainLayout>
+        <MainLayout
+            title={`Hotims Music - ${track.name}, ${track.artist}`}
+            keywords={`Music, tracks, artists, ${track.name}, ${track.artist}`}
+        >
             <Button
                 className={s.back}
                 variant={'outlined'}

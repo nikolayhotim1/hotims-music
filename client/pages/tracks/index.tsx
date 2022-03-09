@@ -22,7 +22,7 @@ const index = () => {
     }
 
     return (
-        <MainLayout>
+        <MainLayout title={'Hotims Music - Track List'}>
             <Grid container justifyContent='center'>
                 <Card className={s.tracks}>
                     <Box p={3}>
