@@ -15,6 +15,7 @@ const Player = () => {
     useEffect(() => {
         if (!audio) {
             audio = new Audio();
+            audio.autoplay;
         } else {
             setAudio();
             play();

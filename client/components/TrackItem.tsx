@@ -34,7 +34,6 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
                 <div className={s.track_name}>{track.name}</div>
                 <div className={s.track_artist}>{track.artist}</div>
             </Grid>
-            {active && <div>00:00 / 03:30</div>}
             <IconButton onClick={e => e.stopPropagation()} className={s.delete_track}>
                 <Delete />
             </IconButton>
