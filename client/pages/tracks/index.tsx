@@ -1,17 +1,32 @@
-import { Button, Card, Grid } from '@mui/material';
+import { Button, Card, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import TrackList from '../../components/TrackList';
 import MainLayout from '../../layouts/MainLayout';
 import s from './styles/index.module.scss';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { NextThunkDispatch, wrapper } from '../../store';
-import { fetchTracks } from '../../store/action-creators/track';
+import { fetchTracks, searchTracks } from '../../store/action-creators/track';
+import { useDispatch } from 'react-redux';
 
 const index = () => {
     const router = useRouter();
     const { tracks, error } = useTypedSelector(state => state.track);
+    const [query, setQuery] = useState<string>('');
+    const dispatch = useDispatch() as NextThunkDispatch;
+    const [timer, setTimer] = useState<any>(null);
+
+    const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.target.value);
+
+        if (timer) {
+            clearTimeout(timer);
+        }
+        setTimer(setTimeout(async () => {
+            await dispatch(searchTracks(e.target.value));
+        }, 500));
+    };
 
     if (error) {
         return (
@@ -31,6 +46,13 @@ const index = () => {
                             <Button onClick={() => router.push('/tracks/create')}>Load</Button>
                         </Grid>
                     </Box>
+                    <TextField
+                        className={s.search}
+                        fullWidth
+                        value={query}
+                        onChange={search}
+                        placeholder={'Search'}
+                    />
                     <TrackList tracks={tracks} />
                 </Card>
             </Grid>
