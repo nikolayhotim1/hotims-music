@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useInput } from '../../hooks/useInput';
 import MainLayout from '../../layouts/MainLayout';
-import { ITrack } from '../../types/track';
+import { IComment, ITrack } from '../../types/track';
 import s from './styles/[id].module.scss';
 
 const TrackPage = ({ serverTrack }: any) => {
@@ -66,8 +66,8 @@ const TrackPage = ({ serverTrack }: any) => {
                 <Button onClick={addComment}>Send</Button>
             </Grid>
             <div>
-                {track.comments.map((comment: any) =>
-                    <div>
+                {track.comments.map((comment: IComment) =>
+                    <div key={comment._id}>
                         <h4>{comment.username}</h4>
                         <p>{comment.text}</p>
                     </div>

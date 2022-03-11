@@ -10,7 +10,10 @@ export enum FileType {
 
 @Injectable()
 export class FileService {
-    createFile(type: FileType, file: { originalname: string; buffer: string | NodeJS.ArrayBufferView; }): string {
+    createFile(
+        type: FileType,
+        file: { originalname: string; buffer: string | NodeJS.ArrayBufferView; }
+    ): string {
         try {
             const fileExtension = file.originalname.split('.').pop();
             const fileName = `${uuid.v4()}.${fileExtension}`;
@@ -25,5 +28,5 @@ export class FileService {
         }
     }
 
-    removeFile(fileName: string) { };
+    removeFile(fileName: string) { }
 };

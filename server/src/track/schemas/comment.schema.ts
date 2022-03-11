@@ -15,6 +15,6 @@ export class Comment {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Track' })
     track: Track;
-}
+};
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

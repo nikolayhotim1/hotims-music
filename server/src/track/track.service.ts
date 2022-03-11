@@ -10,14 +10,17 @@ import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class TrackService {
-
     constructor(
         @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
         @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
         private fileService: FileService
     ) { }
 
-    async create(dto: CreateTrackDto, picture, audio): Promise<Track> {
+    async create(
+        dto: CreateTrackDto,
+        picture: { originalname: string; buffer: string | NodeJS.ArrayBufferView; },
+        audio: { originalname: string; buffer: string | NodeJS.ArrayBufferView; }
+    ): Promise<Track> {
         const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
         const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
         const track = await this.trackModel.create({ ...dto, listens: 0, audio: audioPath, picture: picturePath });
@@ -49,7 +52,7 @@ export class TrackService {
 
     async listen(id: ObjectId) {
         const track = await this.trackModel.findById(id);
-        track.listens += 1;
+        track.listens++;
         track.save();
     }
 
