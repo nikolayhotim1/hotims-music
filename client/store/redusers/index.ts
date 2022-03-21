@@ -14,8 +14,8 @@ export const reducer = (state: any, action: AnyAction) => {
             ...state,
             ...action.payload
         };
-        if (state.count) {
-            nextState.count = state.count;
+        if (state.player) {
+            nextState.player = state.player;
         }
         return nextState;
     } else {

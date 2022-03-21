@@ -26,6 +26,7 @@
     "@nestjs/mongoose": "^9.0.2",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/serve-static": "^2.2.2",
+    "get-audio-duration": "^3.0.1",
     "mongoose": "^6.2.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

@@ -24,3 +24,7 @@ export const setCurrentTime = (payload: number): PlayerAction => {
 export const setVolume = (payload: number): PlayerAction => {
     return { type: PlayerActionTypes.SET_VOLUME, payload };
 };
+
+export const setCollapsed = (payload: boolean): PlayerAction => {
+    return { type: PlayerActionTypes.SET_COLLAPSED, payload }
+};

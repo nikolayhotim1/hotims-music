@@ -8,6 +8,10 @@
     padding: 0 10px;
     background-color: lightgray;
 
+    &_collapsed {
+        transform: translateY(100%);
+    }
+
     .track_info {
         width: 400px;
         margin: 0 20px;
@@ -26,4 +30,17 @@
     .volume_up {
         margin-left: auto;
     }
+}
+
+.track_picture {
+    // max-height: calc(100% - 10px);
+    // max-width: calc(100% - 10px);
+    width: 50px;
+    height: 50px;
+}
+
+.collapse_btn {
+    position: absolute;
+    right: 10px;
+    top: -75%;
 }
