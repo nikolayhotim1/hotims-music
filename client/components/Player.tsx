@@ -8,6 +8,7 @@ import { useActions } from '../hooks/useActions';
 import RevealIcon from '@mui/icons-material/ArrowDropUp';
 import CollapseIcon from '@mui/icons-material/ArrowDropDown';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import axios from 'axios';
 
 let audio: HTMLAudioElement;
 
@@ -44,10 +45,19 @@ const Player = () => {
             audio.ontimeupdate = () => {
                 setCurrentTime((audio.currentTime));
             };
-            audio.onended = () => {
+            audio.onended = async () => {
+                try {
+                    await axios.post(`http://localhost:5000/tracks/listen/${active._id}`)
+                        .then(function () {
+                            console.log(`Track with id ${active._id} has been listened`);
+                        })
+                } catch (e) {
+                    console.log(e);
+                }
                 let nextTrackIndex = tracks.indexOf(active) + 1;
                 nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
                 setActiveTrack(tracks[nextTrackIndex]);
+                audio.play();
             };
         }
     };
@@ -75,20 +85,30 @@ const Player = () => {
                 }
             </Button>
 
-            <IconButton onClick={() => pause ? playTrack() : pauseTrack()}>
+            <IconButton
+                disabled={tracks.length === 0 || !active}
+                onClick={() => pause ? playTrack() : pauseTrack()}
+            >
                 {pause
                     ? <PlayArrow />
                     : <Pause />
                 }
             </IconButton>
 
-            <img className={s.track_picture} src={`http://localhost:5000/${active?.picture}`} alt='Cover' />
+            {!active && tracks.length === 0
+                ? <LibraryMusicIcon className={s.track_picture} />
+                : <img className={s.track_picture} src={`http://localhost:5000/${active?.picture || tracks[0]?.picture}`} alt='Cover' />
+            }
 
             <Grid container direction='column' className={s.track_info}>
-                <div>{active?.name || 'Track'}</div>
-                <div style={{ fontSize: 12, color: 'gray' }}>{active?.artist || 'Artist'}</div>
+                <div>{active?.name || tracks[0]?.name || 'Track name'}</div>
+                <div style={{ fontSize: 12, color: 'gray' }}>{active?.artist || tracks[0]?.artist || 'Artist'}</div>
             </Grid>
-            <TrackProgress left={currentTime} right={duration} onChange={changeCurrentTime} />
+            <TrackProgress
+                left={currentTime}
+                right={duration}
+                onChange={changeCurrentTime}
+            />
             <VolumeUp style={{ marginLeft: 'auto' }} />
             <TrackProgress left={volume} right={100} onChange={changeVolume} />
         </div>

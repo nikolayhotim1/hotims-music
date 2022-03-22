@@ -31,7 +31,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
         } else {
             pause ? playTrack() : pauseTrack();
         }
-    }
+    };
 
     const deleteTrack = async (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
