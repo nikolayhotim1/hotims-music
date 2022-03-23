@@ -8,6 +8,8 @@ import { useActions } from '../hooks/useActions';
 import RevealIcon from '@mui/icons-material/ArrowDropUp';
 import CollapseIcon from '@mui/icons-material/ArrowDropDown';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import axios from 'axios';
 
 let audio: HTMLAudioElement;
@@ -54,10 +56,13 @@ const Player = () => {
                 } catch (e) {
                     console.log(e);
                 }
+                if (tracks.length === 1) {
+                    pauseTrack();
+                    playTrack();
+                }
                 let nextTrackIndex = tracks.indexOf(active) + 1;
                 nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
                 setActiveTrack(tracks[nextTrackIndex]);
-                audio.play();
             };
         }
     };
@@ -70,6 +75,14 @@ const Player = () => {
     const changeCurrentTime = (e: React.ChangeEvent<HTMLInputElement>) => {
         audio.currentTime = Number(e.target.value);
         setCurrentTime(Number(e.target.value));
+    };
+
+    const clearCurrentTime = () => {
+        pauseTrack();
+        audio.currentTime = 0;
+        if (!pause) {
+            playTrack();
+        }
     };
 
     return (
@@ -86,13 +99,48 @@ const Player = () => {
             </Button>
 
             <IconButton
-                disabled={tracks.length === 0 || !active}
-                onClick={() => pause ? playTrack() : pauseTrack()}
+                disabled={tracks.length === 0}
+                onClick={() => {
+                    if (active) {
+                        if (tracks.length === 1) {
+                            clearCurrentTime();
+                        }
+                        let nextTrackIndex = tracks.indexOf(active) - 1;
+                        nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : tracks.length - 1;
+                        setActiveTrack(tracks[nextTrackIndex]);
+                    }
+                }}
+            >
+                <SkipPreviousIcon />
+            </IconButton>
+            <IconButton
+                disabled={tracks.length === 0}
+                onClick={() => {
+                    if (!active) {
+                        setActiveTrack(tracks[0]);
+                    }
+                    pause ? playTrack() : pauseTrack()
+                }}
             >
                 {pause
                     ? <PlayArrow />
                     : <Pause />
                 }
+            </IconButton>
+            <IconButton
+                disabled={tracks.length === 0}
+                onClick={() => {
+                    if (active) {
+                        if (tracks.length === 1) {
+                            clearCurrentTime();
+                        }
+                        let nextTrackIndex = tracks.indexOf(active) + 1;
+                        nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
+                        setActiveTrack(tracks[nextTrackIndex]);
+                    }
+                }}
+            >
+                <SkipNextIcon />
             </IconButton>
 
             {!active && tracks.length === 0
