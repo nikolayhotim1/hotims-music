@@ -7,6 +7,7 @@
     align-items: center;
     padding: 0 10px;
     background-color: lightgray;
+    transition: 1s all ease;
 
     &_collapsed {
         transform: translateY(100%);
@@ -33,8 +34,8 @@
 }
 
 .track_picture {
-    // max-height: calc(100% - 10px);
     // max-width: calc(100% - 10px);
+    // max-height: calc(100% - 10px);
     width: 50px;
     height: 50px;
 }

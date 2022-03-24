@@ -51,7 +51,7 @@ const index = () => {
                         fullWidth
                         value={query}
                         onChange={search}
-                        placeholder={'Search'}
+                        placeholder={'Search Tracks'}
                     />
                     <TrackList tracks={tracks} />
                 </Card>

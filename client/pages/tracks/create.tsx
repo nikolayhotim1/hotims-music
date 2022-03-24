@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
-import s from './styles/create.module.scss';
+import { Button, Grid } from '@mui/material';
 import MainLayout from '../../layouts/MainLayout';
 import StepWrapper from '../../components/StepWrapper';
-import FileUpload from '../../components/FileUpload';
 import { useInput } from '../../hooks/useInput';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { GeneralInfo, SetAudio, SetPicture } from '../../components/create-track-steps';
 
 const create = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -42,43 +41,53 @@ const create = () => {
         <MainLayout>
             <StepWrapper activeStep={activeStep}>
                 {activeStep === 0 &&
-                    <Grid
-                        className={s.track_description}
-                        container
-                        direction='column'
-                        justifyContent='center'
-                    >
-                        <TextField
-                            {...name}
-                            label='Track name'
-                        />
-                        <TextField
-                            {...artist}
-                            label='Artist'
-                        />
-                        <TextField
-                            {...text}
-                            label='Lyrics'
-                            multiline
-                            rows={3}
-                        />
-                    </Grid>
+                    // <Grid
+                    //     className={s.track_description}
+                    //     container
+                    //     direction='column'
+                    //     justifyContent='center'
+                    // >
+                    //     <TextField
+                    //         {...name}
+                    //         label='Track name'
+                    //     />
+                    //     <TextField
+                    //         {...artist}
+                    //         label='Artist'
+                    //     />
+                    //     <TextField
+                    //         {...text}
+                    //         label='Lyrics'
+                    //         multiline
+                    //         rows={3}
+                    //     />
+                    // </Grid>
+                    <GeneralInfo
+                        name={name}
+                        artist={artist}
+                        text={text}
+                    />
                 }
                 {activeStep === 1 &&
-                    <FileUpload
-                        setFile={setPicture}
-                        accept='image/*'
-                    >
-                        <Button>Upload cover</Button>
-                    </FileUpload>
+                    // <FileUpload
+                    //     setFile={setPicture}
+                    //     accept='image/*'
+                    // >
+                    //     <Button>Upload cover</Button>
+                    // </FileUpload>
+                    <SetPicture
+                        picture={picture}
+                        setPicture={setPicture}
+                    />
                 }
                 {activeStep === 2 &&
-                    <FileUpload
-                        setFile={setAudio}
-                        accept='audio/*'
-                    >
-                        <Button>Upload audio</Button>
-                    </FileUpload>
+                    // <FileUpload
+                    //     setFile={setAudio}
+                    //     accept='audio/*'
+                    // >
+                    //     <Button>Upload audio</Button>
+                    // </FileUpload>
+                    <SetAudio setAudio={setAudio} />
                 }
             </StepWrapper>
             <Grid

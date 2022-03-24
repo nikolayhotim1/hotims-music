@@ -11,6 +11,8 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import axios from 'axios';
+import TrackVolume from './TrackVolume';
+import clsx from 'clsx';
 
 let audio: HTMLAudioElement;
 
@@ -18,6 +20,12 @@ const Player = () => {
     const { pause, volume, active, duration, currentTime, collapsed } = useTypedSelector(state => state.player);
     const { tracks } = useTypedSelector(state => state.track);
     const { pauseTrack, setDuration, playTrack, setVolume, setCurrentTime, setActiveTrack, setCollapsed } = useActions();
+
+    useEffect(() => {
+        if (!active && tracks.length) {
+            setActiveTrack(tracks[0]);
+        }
+    }, []);
 
     useEffect(() => {
         if (!audio) {
@@ -34,6 +42,22 @@ const Player = () => {
             audio.play();
         }
     }, [active, pause]);
+
+    const nextAudio = () => {
+        if (active) {
+            let nextTrackIndex = tracks.indexOf(active) + 1;
+            nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
+            setActiveTrack(tracks[nextTrackIndex]);
+        }
+    };
+
+    const prevAudio = () => {
+        if (active) {
+            let nextTrackIndex = tracks.indexOf(active) - 1;
+            nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : tracks.length - 1;
+            setActiveTrack(tracks[nextTrackIndex]);
+        }
+    };
 
     const setAudio = () => {
         if (active) {
@@ -60,9 +84,7 @@ const Player = () => {
                     pauseTrack();
                     playTrack();
                 }
-                let nextTrackIndex = tracks.indexOf(active) + 1;
-                nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
-                setActiveTrack(tracks[nextTrackIndex]);
+                nextAudio();
             };
         }
     };
@@ -86,15 +108,15 @@ const Player = () => {
     };
 
     return (
-        <div className={s.player}>
+        <div className={clsx({ [s.player]: true, [s.player_collapsed]: !collapsed })}>
             <Button
                 className={s.collapse_btn}
                 variant='contained'
                 onClick={() => setCollapsed(!collapsed)}
             >
                 {collapsed
-                    ? <RevealIcon />
-                    : <CollapseIcon />
+                    ? <CollapseIcon />
+                    : <RevealIcon />
                 }
             </Button>
 
@@ -105,9 +127,7 @@ const Player = () => {
                         if (tracks.length === 1) {
                             clearCurrentTime();
                         }
-                        let nextTrackIndex = tracks.indexOf(active) - 1;
-                        nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : tracks.length - 1;
-                        setActiveTrack(tracks[nextTrackIndex]);
+                        prevAudio();
                     }
                 }}
             >
@@ -116,9 +136,6 @@ const Player = () => {
             <IconButton
                 disabled={tracks.length === 0}
                 onClick={() => {
-                    if (!active) {
-                        setActiveTrack(tracks[0]);
-                    }
                     pause ? playTrack() : pauseTrack()
                 }}
             >
@@ -134,9 +151,7 @@ const Player = () => {
                         if (tracks.length === 1) {
                             clearCurrentTime();
                         }
-                        let nextTrackIndex = tracks.indexOf(active) + 1;
-                        nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
-                        setActiveTrack(tracks[nextTrackIndex]);
+                        nextAudio();
                     }
                 }}
             >
@@ -145,20 +160,32 @@ const Player = () => {
 
             {!active && tracks.length === 0
                 ? <LibraryMusicIcon className={s.track_picture} />
-                : <img className={s.track_picture} src={`http://localhost:5000/${active?.picture || tracks[0]?.picture}`} alt='Cover' />
+                : <img
+                    className={s.track_picture}
+                    src={`http://localhost:5000/${active?.picture}`}
+                    alt='Cover'
+                />
             }
 
-            <Grid container direction='column' className={s.track_info}>
-                <div>{active?.name || tracks[0]?.name || 'Track name'}</div>
-                <div style={{ fontSize: 12, color: 'gray' }}>{active?.artist || tracks[0]?.artist || 'Artist'}</div>
+            <Grid
+                className={s.track_info}
+                container
+                direction='column'
+            >
+                <div className={s.track_name}>{active?.name || 'Track'}</div>
+                <div className={s.track_artist}>{active?.artist || 'Artist'}</div>
             </Grid>
             <TrackProgress
                 left={currentTime}
                 right={duration}
                 onChange={changeCurrentTime}
             />
-            <VolumeUp style={{ marginLeft: 'auto' }} />
-            <TrackProgress left={volume} right={100} onChange={changeVolume} />
+            <VolumeUp className={s.volume_up} />
+            <TrackVolume
+                left={volume}
+                right={100}
+                onChange={changeVolume}
+            />
         </div>
     );
 };
