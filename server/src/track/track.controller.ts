@@ -1,3 +1,5 @@
+import { UpdateTrackDto } from './dto/update-track-dto';
+import { OperateTrackWithAlbumDto } from './dto/operate-track-with-album.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { ObjectId } from 'mongoose';
 import { CreateTrackDto } from './dto/create-track.dto';
@@ -50,5 +52,34 @@ export class TrackController {
     @Post('/listen/:id')
     listen(@Param('id') id: ObjectId) {
         return this.trackService.listen(id);
+    }
+
+    @Post('/add_to_album')
+    addTrackToAlbum(@Body() dto: OperateTrackWithAlbumDto) {
+        return this.trackService.addTrackToAlbum(dto);
+    }
+
+    @Post('/remove_from_album')
+    removeTrackFromAlbum(@Body() dto: OperateTrackWithAlbumDto) {
+        return this.trackService.removeTrackFromAlbum(dto);
+    }
+
+    @Post('/update/:id')
+    @UseInterceptors(
+        FileFieldsInterceptor([
+            { name: 'picture', maxCount: 1 },
+            { name: 'audio', maxCount: 1 },
+        ]),
+    )
+    updateTrack(
+        @Param('id') id: ObjectId,
+        @Body() dto: UpdateTrackDto,
+        @UploadedFiles() files: any,
+    ) {
+        let { picture, audio } = files || {};
+        picture = !picture ? [] : picture;
+        audio = !audio ? [] : audio;
+
+        return this.trackService.updateTrack(id, dto, picture[0], audio[0]);
     }
 };

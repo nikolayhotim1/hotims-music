@@ -1,3 +1,4 @@
+import { Album, AlbumSchema } from './../album/schemas/album.schema';
 import { FileService } from './../file/file.service';
 import { Comment, CommentSchema } from './schemas/comment.schema';
 import { Track, TrackSchema } from './schemas/track.schema';
@@ -8,6 +9,7 @@ import { Module } from '@nestjs/common';
 
 @Module({
     imports: [
+        MongooseModule.forFeature([{ name: Album.name, schema: AlbumSchema }]),
         MongooseModule.forFeature([{ name: Track.name, schema: TrackSchema }]),
         MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }])
     ],

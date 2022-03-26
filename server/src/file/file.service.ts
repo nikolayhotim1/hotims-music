@@ -28,5 +28,8 @@ export class FileService {
         }
     }
 
-    removeFile(fileName: string) { }
+    removeFile(filePath: string) {
+        const fullFilePath = path.resolve(__dirname, '..', 'static', filePath);
+        fs.unlinkSync(fullFilePath);
+    }
 };

@@ -39,8 +39,14 @@ const TrackPage = ({ serverTrack }: any) => {
             >
                 To the list
             </Button>
-            <Grid container className={s.track_description}>
-                <img src={`http://localhost:5000/${track.picture}`} alt='Track cover' />
+            <Grid
+                container
+                className={s.track_description}
+            >
+                <img
+                    src={`http://localhost:5000/${track.picture}`}
+                    alt='Track cover'
+                />
                 <div>
                     <h1>{track.name}</h1>
                     <h2>{track.artist}</h2>
@@ -50,7 +56,10 @@ const TrackPage = ({ serverTrack }: any) => {
             <h2>Lyrics</h2>
             <p>{track.text}</p>
             <h2>Comments</h2>
-            <Grid container className={s.add_comment}>
+            <Grid
+                container
+                className={s.add_comment}
+            >
                 <TextField
                     {...username}
                     label='Your name'

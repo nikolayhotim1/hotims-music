@@ -18,10 +18,22 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <>
             <Head>
                 <title>{title || 'Hotims Music'}</title>
-                <meta name='description' content={`The best music platform in the world. Here everyone can leave their track and become famous. ${description}`} />
-                <meta name='robots' content='index, follow' />
-                <meta name='keywords' content={keywords || 'Music, tracks, artists'} />
-                <meta name='viewport' content='width=device-width, initial-scale=1' />
+                <meta
+                    name='description'
+                    content={`The best music platform in the world. Here everyone can leave their track and become famous. ${description}`}
+                />
+                <meta
+                    name='robots'
+                    content='index, follow'
+                />
+                <meta
+                    name='keywords'
+                    content={keywords || 'Music, tracks, artists'}
+                />
+                <meta
+                    name='viewport'
+                    content='width=device-width, initial-scale=1'
+                />
             </Head>
             <Navbar />
             <Container className={s.main_layout}>

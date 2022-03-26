@@ -13,6 +13,7 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import axios from 'axios';
 import TrackVolume from './TrackVolume';
 import clsx from 'clsx';
+import StopIcon from '@mui/icons-material/Stop';
 
 let audio: HTMLAudioElement;
 
@@ -119,7 +120,6 @@ const Player = () => {
                     : <RevealIcon />
                 }
             </Button>
-
             <IconButton
                 disabled={tracks.length === 0}
                 onClick={() => {
@@ -132,6 +132,17 @@ const Player = () => {
                 }}
             >
                 <SkipPreviousIcon />
+            </IconButton>
+            <IconButton
+                disabled={tracks.length === 0}
+                onClick={() => {
+                    if (active) {
+                        pauseTrack();
+                        audio.currentTime = 0;
+                    }
+                }}
+            >
+                <StopIcon />
             </IconButton>
             <IconButton
                 disabled={tracks.length === 0}
@@ -157,7 +168,6 @@ const Player = () => {
             >
                 <SkipNextIcon />
             </IconButton>
-
             {!active && tracks.length === 0
                 ? <LibraryMusicIcon className={s.track_picture} />
                 : <img
@@ -166,7 +176,6 @@ const Player = () => {
                     alt='Cover'
                 />
             }
-
             <Grid
                 className={s.track_info}
                 container

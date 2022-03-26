@@ -1,12 +1,6 @@
-/**
- * Set picture and set audio files are different components because of possibility of
- * changing SetPicture view in future.
- * Also implementing them as a single component violates the SRP principle
- */
-
 import React from 'react';
 import FileUpload from '../FileUpload';
-import styles from './styles/SetPictureStep.module.scss';
+import s from './styles/SetPictureStep.module.scss';
 import { Button } from '@mui/material';
 
 interface SetPictureProps {
@@ -21,7 +15,7 @@ const SetPicture: React.FC<SetPictureProps> = ({ picture, setPicture }) => {
             accept='image/*'
         >
             {picture && <img
-                className={styles['cover-image']}
+                className={s.cover}
                 src={URL.createObjectURL(picture)}
             />}
             <Button>Upload cover</Button>

@@ -9,5 +9,4 @@ const makeStore: MakeStore<Store<RootState>> = (
 ) => createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 export const wrapper = createWrapper<Store<RootState>>(makeStore, { debug: true });
-
 export type NextThunkDispatch = ThunkDispatch<RootState, void, AnyAction>;

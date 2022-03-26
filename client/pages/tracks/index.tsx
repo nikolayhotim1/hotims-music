@@ -19,7 +19,6 @@ const index = () => {
 
     const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
-
         if (timer) {
             clearTimeout(timer);
         }
@@ -38,10 +37,16 @@ const index = () => {
 
     return (
         <MainLayout title={'Hotims Music - Track List'}>
-            <Grid container justifyContent='center'>
+            <Grid
+                container
+                justifyContent='center'
+            >
                 <Card className={s.tracks}>
                     <Box p={3}>
-                        <Grid container justifyContent='space-between'>
+                        <Grid
+                            container
+                            justifyContent='space-between'
+                        >
                             <h1>Track List</h1>
                             <Button onClick={() => router.push('/tracks/create')}>Load</Button>
                         </Grid>

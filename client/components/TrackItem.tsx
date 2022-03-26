@@ -49,7 +49,10 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
     };
 
     return (
-        <Card className={s.track} onClick={() => router.push(`/tracks/${track._id}`)} >
+        <Card
+            className={s.track}
+            onClick={() => router.push(`/tracks/${track._id}`)}
+        >
             <IconButton onClick={play}>
                 {active && (pause
                     ? <PlayArrow />
@@ -58,8 +61,14 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
                     <PlayArrow />
                 }
             </IconButton>
-            <img src={`http://localhost:5000/${track.picture}`} alt='Track cover' />
-            <Grid className={s.track_info} container direction='column' >
+            <img
+                src={`http://localhost:5000/${track.picture}`}
+                alt='Track cover'
+            />
+            <Grid
+                className={s.track_info}
+                container direction='column'
+            >
                 <div className={s.track_name}>{track.name}</div>
                 <div className={s.track_artist}>{track.artist}</div>
             </Grid>
@@ -67,7 +76,10 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
                 ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(duration)}</div>
                 : <div>{formatTrackTime(track.duration)}</div>
             }
-            <IconButton onClick={deleteTrack} className={s.delete_track}>
+            <IconButton
+                onClick={deleteTrack}
+                className={s.delete_track}
+            >
                 <Delete />
             </IconButton>
         </Card>

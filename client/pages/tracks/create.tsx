@@ -27,7 +27,6 @@ const create = () => {
             formData.append('picture', picture);
             formData.append('audio', audio);
             axios.post('http://localhost:5000/tracks', formData)
-                // .then(resp => router.push('/tracks'))
                 .catch(e => console.log(e))
                 .finally(() => router.push('/tracks'))
         }
@@ -41,27 +40,6 @@ const create = () => {
         <MainLayout>
             <StepWrapper activeStep={activeStep}>
                 {activeStep === 0 &&
-                    // <Grid
-                    //     className={s.track_description}
-                    //     container
-                    //     direction='column'
-                    //     justifyContent='center'
-                    // >
-                    //     <TextField
-                    //         {...name}
-                    //         label='Track name'
-                    //     />
-                    //     <TextField
-                    //         {...artist}
-                    //         label='Artist'
-                    //     />
-                    //     <TextField
-                    //         {...text}
-                    //         label='Lyrics'
-                    //         multiline
-                    //         rows={3}
-                    //     />
-                    // </Grid>
                     <GeneralInfo
                         name={name}
                         artist={artist}
@@ -69,25 +47,16 @@ const create = () => {
                     />
                 }
                 {activeStep === 1 &&
-                    // <FileUpload
-                    //     setFile={setPicture}
-                    //     accept='image/*'
-                    // >
-                    //     <Button>Upload cover</Button>
-                    // </FileUpload>
                     <SetPicture
                         picture={picture}
                         setPicture={setPicture}
                     />
                 }
                 {activeStep === 2 &&
-                    // <FileUpload
-                    //     setFile={setAudio}
-                    //     accept='audio/*'
-                    // >
-                    //     <Button>Upload audio</Button>
-                    // </FileUpload>
-                    <SetAudio setAudio={setAudio} />
+                    <SetAudio
+                        audio={audio}
+                        setAudio={setAudio}
+                    />
                 }
             </StepWrapper>
             <Grid
