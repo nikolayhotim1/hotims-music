@@ -3,6 +3,9 @@ import styles from './styles/AlbumPage.module.scss';
 import { IAlbum } from '../../../types/albums';
 import EditIcon from '@mui/icons-material/Edit';
 import { useOnBlurUpdate } from '../model/hooks';
+import { fetchAlbums } from '../../../store/action-creators/albums';
+import axios from 'axios';
+import { NextThunkDispatch, wrapper } from '../../../store';
 
 interface AlbumDescriptionProps {
     thisAlbum: IAlbum;
@@ -53,3 +56,18 @@ export const AlbumDescription: React.FC<AlbumDescriptionProps> = ({
         </div>
     );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(store =>
+    async ({ params }) => {
+        const dispatch = store.dispatch as NextThunkDispatch;
+        await dispatch(fetchAlbums());
+        const responseAlbum = await axios.get(
+            'http://localhost:5000/albums/' + params?.id
+        );
+        return {
+            props: {
+                serverAlbum: responseAlbum.data,
+            },
+        };
+    }
+);

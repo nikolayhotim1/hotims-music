@@ -15,11 +15,6 @@ export class AlbumController {
         return this.albumService.create(dto, picture[0]);
     }
 
-    @Post('/:id_A/:id_T')
-    addTrackIn(@Param('id_A') id_A: ObjectId, @Param('id_T') id_T: ObjectId) {
-        return this.albumService.addTrackIn(id_A, id_T);
-    }
-
     @Post('/update/:id')
     @UseInterceptors(FileFieldsInterceptor([{ name: 'picture', maxCount: 1 }]))
     update(

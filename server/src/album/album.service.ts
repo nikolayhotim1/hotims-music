@@ -15,7 +15,7 @@ type TDeleteResponse = {
 export class AlbumService {
     constructor(
         @InjectModel(Album.name) private albumModel: Model<AlbumDocument>,
-        @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
+        // @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
         private fileService: FileService
     ) { }
 
@@ -26,14 +26,6 @@ export class AlbumService {
             picture: picturePath,
         });
         return album;
-    }
-
-    async addTrackIn(id_A: ObjectId, id_T: ObjectId): Promise<Track> {
-        const album = await this.albumModel.findById(id_A);
-        const track = await this.trackModel.findById(id_T);
-        album.tracks.push(track._id);
-        await album.save();
-        return track;
     }
 
     async updateAlbum(
