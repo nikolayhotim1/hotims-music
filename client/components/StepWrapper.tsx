@@ -3,12 +3,11 @@ import React from 'react';
 import s from './styles/StepWrapper.module.scss';
 
 interface StepWrapperProps {
-    activeStep: number
+    activeStep: number,
+    steps: string[]
 }
 
-const steps = ['Track info', 'Upload cover', 'Upload audio'];
-
-const StepWrapper: React.FC<StepWrapperProps> = ({ activeStep, children }) => {
+const StepWrapper: React.FC<StepWrapperProps> = ({ activeStep, steps, children }) => {
     return (
         <Container>
             <Stepper activeStep={activeStep}>

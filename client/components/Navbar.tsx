@@ -9,19 +9,21 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { useRouter } from 'next/router';
+import QueueMusicIcon from '@mui/icons-material/QueueMusic';
+import HomeIcon from '@mui/icons-material/Home';
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
+import AlbumIcon from '@mui/icons-material/Album';
 
 const menuItems = [
-    { text: 'Main Page', path: '/', },
-    { text: 'Track List', path: '/tracks' }
+    { text: 'Home Page', path: '/', Icon: HomeIcon },
+    { text: 'Track List', path: '/tracks', Icon: AudiotrackIcon },
+    { text: 'Album List', path: '/albums', Icon: AlbumIcon }
 ];
 
 const drawerWidth = 240;
@@ -71,18 +73,24 @@ export default function Navbar() {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open}>
+            <AppBar position='fixed' open={open}>
                 <Toolbar>
                     <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
+                        color='inherit'
+                        aria-label='open drawer'
                         onClick={handleDrawerOpen}
-                        edge="start"
+                        edge='start'
                         sx={{ mr: 2, ...(open && { display: 'none' }) }}
                     >
-                        <MenuIcon />
+                        <QueueMusicIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
+                    <Typography
+                        variant='h6'
+                        noWrap
+                        component='div'
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => router.push('/')}
+                    >
                         HOTIMS MUSIC
                     </Typography>
                 </Toolbar>
@@ -96,8 +104,8 @@ export default function Navbar() {
                         boxSizing: 'border-box',
                     },
                 }}
-                variant="persistent"
-                anchor="left"
+                variant='persistent'
+                anchor='left'
                 open={open}
             >
                 <DrawerHeader>
@@ -107,10 +115,10 @@ export default function Navbar() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {menuItems.map(({ text, path }, index) => (
+                    {menuItems.map(({ text, path, Icon }) => (
                         <ListItem button key={path} onClick={() => router.push(path)} >
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                <Icon />
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>

@@ -7,11 +7,11 @@ import { AlbumService } from './album.service';
 import { Album, AlbumSchema } from './schemas/album.schema';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Album.name, schema: AlbumSchema }]),
-    MongooseModule.forFeature([{ name: Track.name, schema: TrackSchema }]),
-  ],
-  controllers: [AlbumController],
-  providers: [AlbumService, FileService],
+    imports: [
+        MongooseModule.forFeature([{ name: Album.name, schema: AlbumSchema }]),
+        MongooseModule.forFeature([{ name: Track.name, schema: TrackSchema }]),
+    ],
+    controllers: [AlbumController],
+    providers: [AlbumService, FileService],
 })
-export class AlbumModule {}
+export class AlbumModule { };

@@ -1,0 +1,99 @@
+$opacity: 1;
+$is-picture-shown: true;
+
+.editIcon {
+  cursor: pointer;
+  transition: all 400ms;
+  color: #ababab;
+  font-size: 1.3rem;
+  &:hover {
+    color: #616161;
+  }
+}
+
+.spanField {
+  border: 2px solid transparent;
+  transition: all 500ms;
+  font-size: 1.5rem;
+  padding: 0.1em;
+  overflow: hidden;
+
+  &:focus {
+    border: 2px solid rgb(113, 113, 113);
+    outline: 0;
+  }
+}
+
+.isEditable {
+  &::selection {
+    color: rgb(255, 114, 114);
+  }
+  &:hover {
+    cursor: pointer;
+    border: 2px solid rgb(157, 159, 157);
+    border-radius: 5px;
+  }
+}
+
+// IMAGE
+.mainCoverContainer {
+  position: relative;
+  z-index: 0;
+  width: 200px;
+  height: 200px;
+  .iconContainer {
+    transition: all 600ms;
+    position: absolute;
+    z-index: -100;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    // opacity: ;
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: -100;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: #616161;
+      opacity: 0.6;
+    }
+
+    .insertPhotoIcon {
+      position: absolute;
+      z-index: 50;
+      margin: auto;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      font-size: 5rem;
+      color: #f1eeee;
+    }
+  }
+  img {
+    cursor: pointer;
+    position: relative;
+    transition: all 400ms;
+    width: 200px;
+    height: 200px;
+    z-index: 300;
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 300;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: #f1eeee;
+    }
+    &:hover {
+      z-index: 0;
+      opacity: 0;
+    }
+  }
+}

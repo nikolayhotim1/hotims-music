@@ -14,7 +14,7 @@ export class TrackController {
     @Post()
     @UseInterceptors(FileFieldsInterceptor([
         { name: 'picture', maxCount: 1 },
-        { name: 'audio', maxCount: 1 },
+        { name: 'audio', maxCount: 1 }
     ]))
     create(@UploadedFiles() files: any, @Body() dto: CreateTrackDto) {
         const { picture, audio } = files;
@@ -68,18 +68,17 @@ export class TrackController {
     @UseInterceptors(
         FileFieldsInterceptor([
             { name: 'picture', maxCount: 1 },
-            { name: 'audio', maxCount: 1 },
+            { name: 'audio', maxCount: 1 }
         ]),
     )
     updateTrack(
         @Param('id') id: ObjectId,
         @Body() dto: UpdateTrackDto,
-        @UploadedFiles() files: any,
+        @UploadedFiles() files: any
     ) {
         let { picture, audio } = files || {};
         picture = !picture ? [] : picture;
         audio = !audio ? [] : audio;
-
         return this.trackService.updateTrack(id, dto, picture[0], audio[0]);
     }
 };

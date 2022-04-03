@@ -30,30 +30,30 @@ export class TrackService {
         const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
         const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
         const duration = Math.ceil(await getAudioDurationInSeconds(path.resolve(__dirname, '..', 'static', audioPath)));
-        const track = await this.trackModel.create({ ...dto, listens: 0, audio: audioPath, picture: picturePath, duration })
+        const track = await this.trackModel.create({ ...dto, listens: 0, audio: audioPath, picture: picturePath, duration });
         return track;
     }
 
     async updateTrack(
         id: ObjectId,
         dto: UpdateTrackDto,
-        picture,
-        audio,
+        picture: any,
+        audio: any
     ): Promise<Track> {
         const media = this.getMediaData(audio, picture);
         const dataForUpdate = {
             ...dto,
-            ...media,
+            ...media
         };
         this.deleteOldMediaData(id, media);
-
         const track = await this.trackModel.findOneAndUpdate(
             { _id: id },
             dataForUpdate,
-            { new: true, useFindAndModify: false },
+            { new: true, useFindAndModify: false }
         );
         return track;
     }
+
     async getAll(count = 10, offset = 0): Promise<Track[]> {
         const tracks = await this.trackModel.find().skip(Number(offset)).limit(Number(count)).populate('album');
         return tracks;
@@ -106,13 +106,10 @@ export class TrackService {
         try {
             const track = await this.trackModel.findById(dto.trackId);
             const album = await this.albumModel.findById(dto.albumId);
-
             track.album = album._id;
-
             album.tracks.push(track._id);
             album.save();
             track.save();
-
             return { message: 'Track successfully added to album.' };
         } catch (e) {
             return { error: 'An error occurred adding file.' };
@@ -125,24 +122,20 @@ export class TrackService {
         try {
             const album = await this.albumModel.findById(dto.albumId);
             const track = await this.trackModel.findById(dto.trackId);
-
             album.tracks = album.tracks.filter((trackItem: TrackDocument) => {
                 return trackItem._id.toString() !== track._id.toString();
             });
             track.album = undefined;
-
             album.save();
             track.save();
-
             return { message: 'Track successfully removed from album.' };
         } catch (error) {
             return { error: 'An error occurred removing file' };
         }
     }
 
-    private getMediaData(audio, picture) {
+    private getMediaData(audio: any, picture: any) {
         const returnData: { audio?: string; picture?: string } = {};
-
         if (audio) {
             audio = this.fileService.createFile(FileType.AUDIO, audio);
             returnData.audio = audio;
@@ -154,7 +147,7 @@ export class TrackService {
         return returnData;
     }
 
-    private async deleteOldMediaData(id, media) {
+    private async deleteOldMediaData(id: ObjectId, media: any) {
         const track = await this.trackModel.findById(id);
         if (media.picture) {
             this.fileService.removeFile(track.picture);

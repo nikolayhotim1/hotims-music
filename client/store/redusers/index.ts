@@ -1,3 +1,4 @@
+import { albumReducer } from './albumReducer';
 import { trackReduser } from './trackReduser';
 import { playerReducer } from './playerReducer';
 import { AnyAction, combineReducers } from 'redux';
@@ -5,7 +6,8 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 const rootReducer = combineReducers({
     player: playerReducer,
-    track: trackReduser
+    track: trackReduser,
+    album: albumReducer
 });
 
 export const reducer = (state: any, action: AnyAction) => {

@@ -1,5 +1,5 @@
 export class CreateAlbumDto {
-  readonly name;
-  readonly author;
-  readonly picture?;
-}
+    readonly name: string;
+    readonly author: string;
+    readonly picture?: string;
+};

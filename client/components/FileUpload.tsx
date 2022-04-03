@@ -3,6 +3,8 @@ import s from './styles/FileUpload.module.scss';
 
 interface FileUploadProps {
     setFile: Function,
+    setGlobImage?: Function,
+    setGlobTrack?: Function,
     accept: string
 }
 
