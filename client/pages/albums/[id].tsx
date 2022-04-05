@@ -15,9 +15,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import styles from '../../components/album/ui/styles/AlbumPage.module.scss';
 import FileUpload from '../../components/FileUpload';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+import { fetchTracks } from '../../store/action-creators/track';
 
 interface AlbumPageProps {
-	serverAlbum: IAlbum;
+	serverAlbum: IAlbum
 }
 
 // interface AlbumPictureProps {
@@ -144,8 +145,9 @@ export const getServerSideProps = wrapper.getServerSideProps(store =>
 	async ({ params }) => {
 		const dispatch = store.dispatch as NextThunkDispatch;
 		await dispatch(fetchAlbums());
+		await dispatch(fetchTracks());
 		const responseAlbum = await axios.get(
-			'http://localhost:5000/albums/' + params?.id
+			`http://localhost:5000/albums/${params?.id}`
 		);
 		return {
 			props: {

@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { fetchTracks } from '../store/action-creators/track';
 import { NextThunkDispatch } from '../store';
+import { SelectAlbum } from './album/lib';
 
 interface TrackItemProps {
     track: ITrack,
@@ -21,7 +22,8 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
     const router = useRouter();
     const dispatch = useDispatch() as NextThunkDispatch;
     const { playTrack, pauseTrack, setActiveTrack } = useActions();
-    const { duration, currentTime, pause } = useTypedSelector(state => state.player);
+    const { active: activeTrack, duration, currentTime, pause } = useTypedSelector(state => state.player);
+    const { activeAlbum } = useTypedSelector(state => state.album);
 
     const play = (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
@@ -43,8 +45,8 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
                 .then(async function () {
                     await dispatch(fetchTracks());
                 })
-        } catch (e) {
-            console.log(e);
+        } catch (e: any) {
+            console.log(e.message);
         }
     };
 
@@ -67,11 +69,16 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
             />
             <Grid
                 className={s.track_info}
-                container direction='column'
+                container
+                direction='column'
             >
                 <div className={s.track_name}>{track.name}</div>
                 <div className={s.track_artist}>{track.artist}</div>
+                {track.album?.name && (
+                    <div className={s.track_album}>{track.album?.name}</div>
+                )}
             </Grid>
+            <SelectAlbum track={track} />
             {active
                 ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(duration)}</div>
                 : <div>{formatTrackTime(track.duration)}</div>

@@ -8,36 +8,23 @@ import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { ITrack } from '../../../types/track';
 import { NextThunkDispatch } from '../../../store';
-
-// const useStyles = makeStyles((theme: Theme) =>
-//     createStyles({
-//         formControl: {
-//             margin: theme.spacing(1),
-//             minWidth: 120,
-//         },
-//         selectEmpty: {
-//             marginTop: theme.spacing(2),
-//         },
-//     })
-// );
+import s from '../styles/SelectAlbum.module.scss';
+import { Grid } from '@mui/material';
 
 interface SelectAlbumProps {
-    track?: ITrack;
+    track?: ITrack
 }
 
 export let selectedAlbumForCreateTrack: string;
 
 export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
-    // const classes = useStyles(null);
     const { albums, activeAlbum } = useTypedSelector(state => state.album);
-
     const openedFrom = {
         TRACK_LIST: track?.album?._id,
         ALBUM_LIST: activeAlbum?._id,
         CREATE_TRACK: !track,
-        ANOTHER_PLACE: '',
+        ANOTHER_PLACE: ''
     };
-
     const [selectedAlbumId, setSelectedAlbumId] = useState<string>(
         openedFrom.TRACK_LIST || openedFrom.ALBUM_LIST || openedFrom.ANOTHER_PLACE
     );
@@ -47,11 +34,9 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
     const handleChange = async (e: React.ChangeEvent<{ value: unknown }>) => {
         const selectedAlbumId = e.target.value as string;
         setSelectedAlbumId(selectedAlbumId);
-
         if (openedFrom.CREATE_TRACK) {
             setSelectedAlbumId(selectedAlbumId);
             selectedAlbumForCreateTrack = selectedAlbumId;
-
             return;
         }
         if (selectedAlbumId === '') {
@@ -67,7 +52,6 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
             }
             setSelectedTrack(prev => ({ ...prev, album: undefined }));
         }
-
         if (selectedTrack.album?._id || activeAlbum?._id) {
             console.log('removing selectedTrack from album...');
             await dispatch(
@@ -78,10 +62,8 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
             );
             setSelectedTrack(prev => ({ ...prev, album: undefined }));
         }
-
         await dispatch(await addTrackToAlbum(selectedAlbumId, selectedTrack._id));
         const album = albums.find(album => album._id === selectedAlbumId);
-
         if (activeAlbum?._id) {
             await dispatch(await fetchTracks());
             return;
@@ -90,9 +72,9 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
     };
 
     return (
-        <div
+        <Grid
+            className={s.select_album}
             onClick={e => e.stopPropagation()}
-            style={openedFrom.CREATE_TRACK ? { margin: '1rem 0 0 0' } : {}}
         >
             <FormControl variant='outlined'>
                 <InputLabel id='demo-simple-select-outlined-label'>Album</InputLabel>
@@ -102,6 +84,7 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
                     value={selectedAlbumId}
                     onChange={handleChange}
                     label='Album'
+                    className={s.select}
                 >
                     <MenuItem value=''>
                         <em>No Album</em>
@@ -115,6 +98,6 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
                     })}
                 </Select>
             </FormControl>
-        </div>
+        </Grid>
     );
 };

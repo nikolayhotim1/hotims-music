@@ -1,6 +1,41 @@
 .track {
-  margin: 1.3rem;
-  padding: 0.6rem;
-  display: flex;
-  align-items: center;
+    cursor: pointer;
+    margin: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+    span.track_index {
+        margin: 0 10px;
+        color: orange;
+    }
+
+    img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .track_info {
+        width: 400px;
+        margin: 0 20px;
+
+        .track_name {
+            font-size: 18px;
+            color: #1976d2;
+        }
+
+        .track_artist {
+            font-size: 14px;
+            color: black;
+        }
+
+        .track_album {
+            font-size: 14px;
+            color: orange;
+        }
+    }
+
+    .delete_track {
+        margin-left: auto;
+    }
 }
