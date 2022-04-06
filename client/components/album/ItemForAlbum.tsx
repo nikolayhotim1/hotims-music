@@ -11,8 +11,6 @@ import { useActions } from '../../hooks/useActions';
 import { ITrack } from '../../types/track';
 import { Card, Grid, IconButton } from '@mui/material';
 import formatTrackTime from '../../utils/formatTime';
-import axios from 'axios';
-import { getAudio } from '../Player';
 
 interface TrackItemProps {
     track: ITrack,
@@ -24,20 +22,10 @@ export const ItemForAlbum: FC<TrackItemProps> = ({ track, itemIndex, active = fa
     const router = useRouter();
     const dispatch = useDispatch() as NextThunkDispatch;
     const { pauseTrack, playTrack, setActiveTrack } = useActions();
-    const { active: activeTrack, duration, currentTime, pause } = useTypedSelector(state => state.player);
+    const { duration, currentTime, pause } = useTypedSelector(state => state.player);
     const { activeAlbum } = useTypedSelector(state => state.album);
 
     const play = (e: { stopPropagation: () => void; }) => {
-        // e.stopPropagation();
-        // if (activeTrack?._id === track._id) {
-        //     pauseTrack();
-        //     setActiveTrack(track);
-        //     const audio = getAudio();
-        //     audio.src = '';
-        //     return;
-        // }
-        // setActiveTrack(track);
-        // playTrack();
         e.stopPropagation();
         if (!active) {
             setActiveTrack(track);
@@ -58,18 +46,6 @@ export const ItemForAlbum: FC<TrackItemProps> = ({ track, itemIndex, active = fa
         } catch (e: any) {
             console.log(e.message);
         }
-        // e.stopPropagation();
-        // try {
-        //     await axios.delete(`http://localhost:5000/tracks/${track._id}`)
-        //         .then(function (response) {
-        //             console.log(`Track with id ${response.data} deleted`)
-        //         })
-        //         .then(async function () {
-        //             await dispatch(fetchTracks());
-        //         })
-        // } catch (e: any) {
-        //     console.log(e.message);
-        // }
     };
 
     return (
@@ -115,45 +91,5 @@ export const ItemForAlbum: FC<TrackItemProps> = ({ track, itemIndex, active = fa
                 <Delete />
             </IconButton>
         </Card>
-
-        // <Card
-        //     className={s.track}
-        //     onClick={() => router.push(`/tracks/${track._id}`)}
-        // >
-        //     <IconButton onClick={play}>
-        //         {activeTrack?._id === track._id ? <Pause /> : <PlayArrow />}
-        //     </IconButton>
-        //     <p
-        //         style={{
-        //             margin: '0 0.5em',
-        //             color: '#6d6d6d',
-        //         }}
-        //     >
-        //         {itemIndex < 10 ? '0' + (itemIndex + 1) : itemIndex + 1}
-        //     </p>
-        //     <img
-        //         width={30}
-        //         height={30}
-        //         src={'http://localhost:5000/' + track.picture}
-        //     />
-        //     <Grid
-        //         container
-        //         direction='column'
-        //         style={{ width: 200, margin: '0 20px' }}
-        //     >
-        //         <div>{track.name}</div>
-        //         <div style={{ fontSize: 12, color: 'gray' }}> {track.artist}</div>
-        //         {track.album?.name && (
-        //             <div style={{ fontSize: 12, color: 'gray' }}>{track.album?.name}</div>
-        //         )}
-        //     </Grid>
-        //     <SelectAlbum track={track} />
-        //     <IconButton
-        //         onClick={(e: any) => deleteTrackFromAlbum(e)}
-        //         style={{ marginLeft: 'auto' }}
-        //     >
-        //         <Delete />
-        //     </IconButton>
-        // </Card>
     );
 };

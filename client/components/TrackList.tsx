@@ -37,7 +37,10 @@ export const TrackList: React.FC<TrackListProps> = ({ tracks, Component }) => {
     }, []);
 
     return (
-        <Grid container direction='column'>
+        <Grid
+            container
+            direction='column'
+        >
             <Box p={2}>
                 {tracks.map((track, index) =>
                     <Component

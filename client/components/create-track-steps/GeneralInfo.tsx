@@ -1,6 +1,7 @@
 import { Grid, TextField } from '@mui/material';
 import React from 'react'
 import { UseInputReturnType } from '../../hooks/useInput'
+import { SelectAlbum } from '../album/lib';
 import s from './styles/GeneralInfo.module.scss';
 
 interface GeneralInfoProps {
@@ -31,6 +32,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = ({ name, artist, text }) => {
                 multiline
                 rows={4}
             />
+            <SelectAlbum />            
         </Grid>
     );
 };
