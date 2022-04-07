@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import s from './styles/TrackItem.module.scss';
+import s from './styles/ItemForAlbum.module.scss';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { fetchTracks, removeTrackFromAlbum } from '../../store/action-creators/track';
@@ -76,8 +76,9 @@ export const ItemForAlbum: FC<TrackItemProps> = ({ track, itemIndex, active = fa
                 <div className={s.track_name}>{track.name}</div>
                 <div className={s.track_artist}>{track.artist}</div>
                 {track.album?.name && (
-                    <div className={s.track_album}>{track.album?.name}</div>
+                    <div className={s.track_album}>{track.album.name}</div>
                 )}
+                <div className={s.track_listens}>Listens: {track.listens}</div>
             </Grid>
             <SelectAlbum track={track} />
             {active

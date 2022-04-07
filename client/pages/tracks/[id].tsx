@@ -133,12 +133,12 @@ const TrackPage = ({ serverTrack }: any) => {
                 <div>
                     <h1>
                         <span
-                            className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
+                            // className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
                             ref={nameRef}
                             onBlur={() => handleOnBlurTrackUpdate(nameRef, 'name')}
                             contentEditable={isEditable}
                         >
-                            {track.name}
+                            Track: {track.name}
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(nameRef)}
@@ -147,18 +147,21 @@ const TrackPage = ({ serverTrack }: any) => {
                     </h1>
                     <h2>
                         <span
+                            // className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
                             ref={artistRef}
-                            contentEditable={isEditable}
                             onBlur={() => handleOnBlurTrackUpdate(artistRef, 'artist')}
-                            className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
+                            contentEditable={isEditable}
                         >
-                            {track.artist}
+                            Artist: {track.artist}
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(artistRef)}
                             className={s.editIcon}
                         />
                     </h2>
+                    {track.album?.name && (
+                        <h3 className={s.track_album}>Album: {track.album.name}</h3>
+                    )}
                     <h3>Listens: {track.listens}</h3>
                 </div>
             </Grid>

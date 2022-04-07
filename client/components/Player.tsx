@@ -185,8 +185,11 @@ const Player = () => {
                 container
                 direction='column'
             >
-                <div className={s.track_name}>{active?.name || 'Track'}</div>
-                <div className={s.track_artist}>{active?.artist || 'Artist'}</div>
+                <div className={s.track_name}>{active?.name}</div>
+                <div className={s.track_artist}>{active?.artist}</div>
+                {active?.album?.name && (
+                    <div className={s.track_album}>{active.album.name}</div>
+                )}
             </Grid>
             <TrackProgress
                 left={currentTime}

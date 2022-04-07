@@ -83,12 +83,12 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
 				<div>
 					<h1>
 						<span
-							className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
+							// className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
 							ref={nameRef}
 							onBlur={() => handleOnBlurAlbumUpdate(nameRef, 'name')}
 							contentEditable={isEditable}
 						>
-							{thisAlbum.name}
+							Album: {thisAlbum.name}
 						</span>
 						<EditIcon
 							onClick={() => handleClickOnEditIcon(nameRef)}
@@ -97,12 +97,12 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
 					</h1>
 					<h2>
 						<span
+							// className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
 							ref={artistRef}
-							contentEditable={isEditable}
 							onBlur={() => handleOnBlurAlbumUpdate(artistRef, 'author')}
-							className={`${s.spanField}${isEditable ? ' ' + s.isEditable : ''}`}
+							contentEditable={isEditable}
 						>
-							{thisAlbum.author}
+							Author: {thisAlbum.author}
 						</span>
 						<EditIcon
 							onClick={() => handleClickOnEditIcon(artistRef)}

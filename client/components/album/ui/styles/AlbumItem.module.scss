@@ -54,27 +54,26 @@
     align-items: center;
 
     img {
-        width: 70px;
-        height: 70px;
+        width: 100px;
+        height: 100px;
     }
 
     .album_info {
-        width: 400px;
+        width: 600px;
         margin: 0 20px;
 
         .album_name {
             font-size: 18px;
-            color: #1976d2;
+            color: orange;
         }
 
         .album_author {
-            font-size: 14px;
-            color: black;
+            font-size: 16px;
         }
 
         .album_tracks {
             font-size: 14px;
-            color: orange;
+            color: gray;
         }
     }
 

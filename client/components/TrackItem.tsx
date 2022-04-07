@@ -75,8 +75,9 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
                 <div className={s.track_name}>{track.name}</div>
                 <div className={s.track_artist}>{track.artist}</div>
                 {track.album?.name && (
-                    <div className={s.track_album}>{track.album?.name}</div>
+                    <div className={s.track_album}>{track.album.name}</div>
                 )}
+                <div className={s.track_listens}>Listens: {track.listens}</div>
             </Grid>
             <SelectAlbum track={track} />
             {active

@@ -6,8 +6,8 @@
     align-items: center;
 
     img {
-        width: 70px;
-        height: 70px;
+        width: 75px;
+        height: 75px;
     }
 
     .track_info {
@@ -15,17 +15,22 @@
         margin: 0 20px;
 
         .track_name {
-            font-size: 18px;
+            font-size: 16px;
             color: #1976d2;
         }
 
         .track_artist {
             font-size: 14px;
-            color: black;
         }
+
         .track_album {
-            font-size: 14px;
+            font-size: 12px;
             color: orange;
+        }
+
+        .track_listens {
+            font-size: 10px;
+            color: gray;
         }
     }
 
