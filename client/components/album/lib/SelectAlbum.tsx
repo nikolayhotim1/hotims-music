@@ -12,7 +12,7 @@ import s from '../styles/SelectAlbum.module.scss';
 import { Grid } from '@mui/material';
 
 interface SelectAlbumProps {
-    track?: ITrack
+    track: ITrack
 }
 
 export let selectedAlbumForCreateTrack: string;
@@ -31,7 +31,7 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
     const [selectedTrack, setSelectedTrack] = useState(track);
     const dispatch = useDispatch() as NextThunkDispatch;
 
-    const handleChange = async (e: React.ChangeEvent<{ value: unknown }>) => {
+    const handleChange: any = async (e: React.ChangeEvent<{ value: unknown }>) => {
         const selectedAlbumId = e.target.value as string;
         setSelectedAlbumId(selectedAlbumId);
         if (openedFrom.CREATE_TRACK) {
@@ -62,10 +62,10 @@ export const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
             );
             setSelectedTrack(prev => ({ ...prev, album: undefined }));
         }
-        await dispatch(await addTrackToAlbum(selectedAlbumId, selectedTrack._id));
+        await dispatch(addTrackToAlbum(selectedAlbumId, selectedTrack._id));
         const album = albums.find(album => album._id === selectedAlbumId);
         if (activeAlbum?._id) {
-            await dispatch(await fetchTracks());
+            await dispatch(fetchTracks());
             return;
         }
         setSelectedTrack(prev => ({ ...prev, album }));

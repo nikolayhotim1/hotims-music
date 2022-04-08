@@ -38,7 +38,7 @@ export const ItemForAlbum: FC<TrackItemProps> = ({ track, itemIndex, active = fa
     const deleteTrackFromAlbum = async (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
         try {
-            const albumId = track?.album?._id ? track?.album?._id : activeAlbum?._id;
+            const albumId = track?.album?._id ? track.album._id : activeAlbum?._id;
             if (albumId) {
                 await dispatch(removeTrackFromAlbum(albumId, track._id));
             }

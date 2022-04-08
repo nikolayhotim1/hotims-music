@@ -44,7 +44,7 @@ export const removeTrack = (id: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.REMOVE_TRACK_ERROR,
-                payload: "We got an error removing track.",
+                payload: 'We got an error removing track.'
             });
         }
     };
@@ -57,17 +57,17 @@ export const removeTrackFromAlbum = (albumId: string, trackId: string) => {
                 `http://localhost:5000/tracks/remove_from_album`,
                 {
                     albumId,
-                    trackId,
+                    trackId
                 }
             );
             dispatch({
                 type: TrackActionTypes.REMOVE_TRACK_FROM_ALBUM,
-                payload: response.data,
+                payload: response.data
             });
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.REMOVE_TRACK_ERROR,
-                payload: "We got an error removing track.",
+                payload: 'We got an error removing track.'
             });
         }
     };
@@ -80,17 +80,34 @@ export const addTrackToAlbum = (albumId: string, trackId: string) => {
                 `http://localhost:5000/tracks/add_to_album`,
                 {
                     albumId,
-                    trackId,
+                    trackId
                 }
             );
             dispatch({
                 type: TrackActionTypes.ADD_TRACK_TO_ALBUM,
-                payload: response.data,
+                payload: response.data
             });
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.ADD_TRACK_TO_ALBUM_ERROR,
-                payload: "We got an error adding this track into the album.",
+                payload: 'We got an error adding this track into the album.'
+            });
+        }
+    };
+};
+
+export const listenTrack = (trackId: string) => {
+    return async (dispatch: Dispatch<TrackAction>) => {
+        try {
+            const response = await axios.post(`http://localhost:5000/tracks/listen/${trackId}`);
+            dispatch({
+                type: TrackActionTypes.LISTEN_TRACK,
+                payload: response.data
+            });
+        } catch (e: any) {
+            dispatch({
+                type: TrackActionTypes.LISTEN_TRACK_ERROR,
+                payload: `We got an error listen this track: ${e.message}`
             });
         }
     };
@@ -109,12 +126,12 @@ export const updateTrack = (trackId: string, data: any) => {
             );
             dispatch({
                 type: TrackActionTypes.UPDATE_TRACK,
-                payload: response.data,
+                payload: response.data
             });
         } catch (e: any) {
             dispatch({
                 type: TrackActionTypes.UPDATE_TRACK_ERROR,
-                payload: `We got an error updating this track: ${e.message}`,
+                payload: `We got an error updating this track: ${e.message}`
             });
         }
     };

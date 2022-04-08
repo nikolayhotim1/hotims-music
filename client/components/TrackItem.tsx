@@ -7,9 +7,8 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { ITrack } from '../types/track';
 import s from './styles/TrackItem.module.scss';
 import formatTrackTime from '../utils/formatTime';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { fetchTracks } from '../store/action-creators/track';
+import { fetchTracks, removeTrack, removeTrackFromAlbum } from '../store/action-creators/track';
 import { NextThunkDispatch } from '../store';
 import { SelectAlbum } from './album/lib';
 
@@ -37,14 +36,19 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
 
     const deleteTrack = async (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
+        const albumId = track?.album?._id ? track.album._id : activeAlbum?._id;
+
         try {
-            await axios.delete(`http://localhost:5000/tracks/${track._id}`)
-                .then(function (response) {
-                    console.log(`Track with id ${response.data} deleted`)
-                })
-                .then(async function () {
-                    await dispatch(fetchTracks());
-                })
+            if (albumId) {
+                await dispatch(removeTrackFromAlbum(albumId, track._id));
+            }
+            await dispatch(removeTrack(track._id));
+            await dispatch(fetchTracks());
+            if (albumId) {
+                router.push(`/albums/${albumId}`, `/albums/${albumId}`, {
+                    shallow: true,
+                });
+            }
         } catch (e: any) {
             console.log(e.message);
         }
