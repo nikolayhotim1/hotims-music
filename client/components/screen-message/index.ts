@@ -1,1 +1,0 @@
-export { ScreenMessage } from "./ScreenMessage";

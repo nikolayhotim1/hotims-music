@@ -1,8 +1,8 @@
 import { Container } from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Player from '../components/Player';
+import Navbar from '../components/track/Navbar';
+import Player from '../components/track/Player';
 import s from './styles/MainLayout.module.scss';
 
 interface MainLayoutProps {

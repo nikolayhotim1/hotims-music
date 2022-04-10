@@ -6,9 +6,9 @@ import { NextThunkDispatch, wrapper } from '../../store';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import MainLayout from '../../layouts/MainLayout';
 import { fetchAlbums, searchAlbums } from '../../store/action-creators/albums';
-import { AlbumList } from '../../components/album/ui/AlbumList';
 import s from './styles/index.module.scss';
 import { fetchTracks } from '../../store/action-creators/track';
+import { AlbumList } from '../../components/album/AlbumList';
 
 const index = () => {
     const router = useRouter();

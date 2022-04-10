@@ -2,15 +2,15 @@ import { Button, Card, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import TrackList from '../../components/TrackList';
 import MainLayout from '../../layouts/MainLayout';
 import s from './styles/index.module.scss';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { NextThunkDispatch, wrapper } from '../../store';
 import { fetchTracks, searchTracks } from '../../store/action-creators/track';
 import { useDispatch } from 'react-redux';
-import TrackItem from '../../components/TrackItem';
 import { fetchAlbums } from '../../store/action-creators/albums';
+import TrackList from '../../components/track/TrackList';
+import TrackItem from '../../components/track/TrackItem';
 
 const index = () => {
     const router = useRouter();

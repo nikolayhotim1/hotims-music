@@ -23,9 +23,9 @@ export class TrackService {
     ) { }
 
     async create(
-        dto: CreateTrackDto,
-        picture: { originalname: string; buffer: string | NodeJS.ArrayBufferView; },
-        audio: { originalname: string; buffer: string | NodeJS.ArrayBufferView; }
+        dto?: CreateTrackDto,
+        picture?: { originalname: string; buffer: string | NodeJS.ArrayBufferView; },
+        audio?: { originalname: string; buffer: string | NodeJS.ArrayBufferView; }
     ): Promise<Track> {
         const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
         const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
@@ -36,9 +36,9 @@ export class TrackService {
 
     async updateTrack(
         id: ObjectId,
-        dto: UpdateTrackDto,
-        picture: any,
-        audio: any
+        dto?: UpdateTrackDto,
+        picture?: any,
+        audio?: any
     ): Promise<Track> {
         const media = this.getMediaData(audio, picture);
         const dataForUpdate = {
@@ -101,7 +101,7 @@ export class TrackService {
     }
 
     async addTrackToAlbum(
-        dto: OperateTrackWithAlbumDto,
+        dto?: OperateTrackWithAlbumDto,
     ): Promise<{ message: string } | { error: string }> {
         try {
             const track = await this.trackModel.findById(dto.trackId);
@@ -117,7 +117,7 @@ export class TrackService {
     }
 
     async removeTrackFromAlbum(
-        dto: OperateTrackWithAlbumDto,
+        dto?: OperateTrackWithAlbumDto,
     ): Promise<{ message: string } | { error: string }> {
         try {
             const album = await this.albumModel.findById(dto.albumId);
