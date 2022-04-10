@@ -74,18 +74,18 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
             </Button>
             <Grid
                 container
-                className={s.album_description}
+                className={s.description}
             >
                 {globTrackPicture || thisAlbum.picture
                     ? <img
-                        className={s.album_picture}
+                        className={s.picture}
                         src={globTrackPicture
                             ? globTrackPicture
                             : `http://localhost:5000/${thisAlbum.picture}`
                         }
                         alt='Album cover'
                     />
-                    : <LibraryMusicIcon className={s.album_picture} />
+                    : <LibraryMusicIcon className={s.picture} />
                 }
                 <div>
                     <h1>
@@ -99,7 +99,7 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(nameRef)}
-                            className={s.editIcon}
+                            className={s.icon}
                         />
                     </h1>
                     <h2>
@@ -113,7 +113,7 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(artistRef)}
-                            className={s.editIcon}
+                            className={s.icon}
                         />
                     </h2>
                     <h3>Tracks: {thisAlbum.tracks.length}</h3>
@@ -143,12 +143,12 @@ export const getServerSideProps = wrapper.getServerSideProps(store =>
         const dispatch = store.dispatch as NextThunkDispatch;
         await dispatch(fetchAlbums());
         await dispatch(fetchTracks());
-        const responseAlbum = await axios.get(
+        const response = await axios.get(
             `http://localhost:5000/albums/${params?.id}`
         );
         return {
             props: {
-                serverAlbum: responseAlbum.data,
+                serverAlbum: response.data
             },
         };
     }

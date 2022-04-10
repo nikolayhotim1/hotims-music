@@ -12,7 +12,7 @@ import { AlbumList } from '../../components/album/AlbumList';
 
 const index = () => {
     const router = useRouter();
-    const { albums } = useTypedSelector(state => state.album);
+    const { albums, error } = useTypedSelector(state => state.album);
     const [query, setQuery] = useState<string>('');
     const dispatch = useDispatch() as NextThunkDispatch;
     const [timer, setTimer] = useState<any>(null);
@@ -26,6 +26,14 @@ const index = () => {
             await dispatch(searchAlbums(e.target.value));
         }, 500));
     };
+
+    if (error) {
+        return (
+            <MainLayout>
+                <h1>{error}</h1>
+            </MainLayout>
+        );
+    }
 
     return (
         <MainLayout title={'Hotims Music - Album List'}>

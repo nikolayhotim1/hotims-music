@@ -122,25 +122,19 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
 
             <Grid
                 container
-                className={s.track_description}
+                className={s.description}
             >
-                <FileUpload
-                    setFile={setPicture}
-                    setGlobImage={setGlobTrackPicture}
-                    accept='image/*'
-                >
-                    {globTrackPicture || track.picture
-                        ? <img
-                            className={s.track_picture}
-                            src={globTrackPicture
-                                ? globTrackPicture
-                                : `http://localhost:5000/${track.picture}`
-                            }
-                            alt='Track cover'
-                        />
-                        : <LibraryMusicIcon className={s.track_picture} />
-                    }
-                </FileUpload>
+                {globTrackPicture || track.picture
+                    ? <img
+                        className={s.picture}
+                        src={globTrackPicture
+                            ? globTrackPicture
+                            : `http://localhost:5000/${track.picture}`
+                        }
+                        alt='Track cover'
+                    />
+                    : <LibraryMusicIcon className={s.picture} />
+                }
                 <div>
                     <h1>
                         Track:{' '}
@@ -153,7 +147,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(nameRef)}
-                            className={s.editIcon}
+                            className={s.icon}
                         />
                     </h1>
                     <h2>
@@ -167,11 +161,11 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(artistRef)}
-                            className={s.editIcon}
+                            className={s.icon}
                         />
                     </h2>
                     {track.album?.name && (
-                        <h3 className={s.track_album}>Album: {track.album.name}</h3>
+                        <h3>Album: {track.album.name}</h3>
                     )}
                     <h3>Listens: {track.listens}</h3>
                 </div>
@@ -210,18 +204,18 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
             </Grid>
             <h2>Lyrics<EditIcon
                 onClick={() => handleClickOnEditIcon(textRef)}
-                className={s.editIcon}
+                className={s.icon}
             /></h2>
-            <p><pre className={s.lyrics}
+            <pre className={s.lyrics}
                 ref={textRef}
                 contentEditable={isEditable}
                 onBlur={() => handleOnBlurTrackUpdate(textRef, 'text')}
             >{track.text}
-            </pre></p>
+            </pre>
             <h2>Comments</h2>
             <Grid
                 container
-                className={s.add_comment}
+                className={s.comment}
             >
                 <TextField
                     {...username}
@@ -252,9 +246,9 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
 export default TrackPage;
 
 export const getServerSideProps = wrapper.getServerSideProps(store =>
-    async ({ params }: any) => {
+    async ({ params }) => {
         const dispatch = store.dispatch as NextThunkDispatch;
-        const response = await axios.get(`http://localhost:5000/tracks/${params.id}`);
+        const response = await axios.get(`http://localhost:5000/tracks/${params?.id}`);
         await dispatch(fetchAlbums());
         await dispatch(fetchTracks());
         return {

@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import MainLayout from '../../layouts/MainLayout';
 import { useInput } from '../../hooks/useInput';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { NextThunkDispatch, wrapper } from '../../store';
 import { fetchAlbums } from '../../store/action-creators/albums';
-import { selectedAlbumForCreateTrack } from '../../components/album/SelectAlbum';
+import SelectAlbum, { selectedAlbumForCreateTrack } from '../../components/album/SelectAlbum';
 import { ITrack } from '../../types/track';
-import { addTrackToAlbum } from '../../store/action-creators/track';
+import { addTrackToAlbum, fetchTracks } from '../../store/action-creators/track';
 import { useDispatch } from 'react-redux';
 import StepWrapper from '../../components/track/StepWrapper';
-import { GeneralInfo } from '../../components/track/create-track-steps';
 import FileUpload from '../../components/track/FileUpload';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import s from './styles/Create.module.scss';
+import s from './styles/create.module.scss';
 
-const create = () => {
+const create = (track: ITrack) => {
     const [activeStep, setActiveStep] = useState(0);
     const [picture, setPicture]: any = useState();
     const [audio, setAudio]: any = useState();
@@ -37,20 +36,20 @@ const create = () => {
             formData.append('name', name.value);
             formData.append('text', text.value);
             formData.append('artist', artist.value);
-            formData?.append('picture', picture);
-            formData?.append('audio', audio);
+            formData.append('picture', picture);
+            formData.append('audio', audio);
             if (selectedAlbumForCreateTrack) {
                 formData.append('album', selectedAlbumForCreateTrack);
             }
             const response = await axios.post<ITrack>(
                 'http://localhost:5000/tracks',
                 formData
-            );
+            ).finally(() => setIsCompleted(true));
             const createdTrack = response.data;
             if (selectedAlbumForCreateTrack) {
                 await dispatch(
                     addTrackToAlbum(selectedAlbumForCreateTrack, createdTrack._id)
-                ).then(() => setIsCompleted(true));
+                );
             }
             router.push('/tracks');
         }
@@ -67,11 +66,28 @@ const create = () => {
                 steps={['Track info', 'Upload cover', 'Upload audio']}
             >
                 {activeStep === 0 &&
-                    <GeneralInfo
-                        name={name}
-                        artist={artist}
-                        text={text}
-                    />
+                    <Grid
+                        className={s.description}
+                        container
+                        direction='column'
+                        justifyContent='center'
+                    >
+                        <TextField
+                            {...name}
+                            label={'Track'}
+                        />
+                        <TextField
+                            {...artist}
+                            label={'Artist'}
+                        />
+                        <TextField
+                            {...text}
+                            label={'Lyrics'}
+                            multiline
+                            rows={4}
+                        />
+                        <SelectAlbum track={track} />
+                    </Grid>
                 }
                 {activeStep === 1 &&
                     <FileUpload
@@ -81,11 +97,11 @@ const create = () => {
                     >
                         {picture
                             ? <img
-                                className={s.track_picture}
+                                className={s.picture}
                                 src={globImage}
                                 alt='Track cover'
                             />
-                            : <LibraryMusicIcon className={s.track_picture} />
+                            : <LibraryMusicIcon className={s.picture} />
                         }
                         {globImage
                             ? <Button>Change cover</Button>
@@ -105,7 +121,7 @@ const create = () => {
                                 controls
                                 src={globTrack}
                             />
-                            : <h2><em>No audio</em></h2>
+                            : <h2 className={s.track} ><em>No audio</em></h2>
                         }
 
                         {globTrack
@@ -142,6 +158,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store =>
         const dispatch = store.dispatch as NextThunkDispatch;
         const response = await axios.get('http://localhost:5000/tracks');
         await dispatch(fetchAlbums());
+        await dispatch(fetchTracks());
         return {
             props: {
                 serverTrack: response.data

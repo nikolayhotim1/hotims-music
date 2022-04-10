@@ -10,7 +10,7 @@ const index = () => {
     return (
         <>
             <MainLayout>
-                <div className={s.main_page}>
+                <div className={s.home}>
                     <h1>Welcome!</h1>
                     <h2>The best tracks are collected here!</h2>
                     <Button

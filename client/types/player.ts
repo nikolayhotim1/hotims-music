@@ -49,7 +49,7 @@ interface SetVolumeAction {
 
 interface SetCollapsedAction {
     type: PlayerActionTypes.SET_COLLAPSED,
-    payload: boolean;
+    payload: boolean
 }
 
 export type PlayerAction = PlayAction

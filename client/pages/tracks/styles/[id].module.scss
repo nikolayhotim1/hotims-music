@@ -3,10 +3,10 @@
     margin-right: 15px;
 }
 
-.track_description {
+.description {
     margin-top: 20px;
 
-    img.track_picture {
+    img.picture {
         width: 225px;
         height: 225px;
         margin-bottom: 10px;
@@ -21,13 +21,13 @@ pre.lyrics {
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
-.add_comment {
+.comment {
     :not(:first-child) {
         margin-bottom: 5px;
     }
 }
 
-.editIcon {
+.icon {
     cursor: pointer;
     margin-left: 10px;
 }

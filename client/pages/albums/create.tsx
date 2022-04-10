@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import MainLayout from '../../layouts/MainLayout';
 import { useInput } from '../../hooks/useInput';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { GeneralInfo, SetPicture } from '../../components/album/create-album-steps';
 import StepWrapper from '../../components/track/StepWrapper';
 import FileUpload from '../../components/track/FileUpload';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import s from './styles/Create.module.scss';
+import s from './styles/create.module.scss';
 
 const create = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -43,10 +42,21 @@ const create = () => {
                 steps={['Album info', 'Upload cover']}
             >
                 {activeStep === 0 &&
-                    <GeneralInfo
-                        name={name}
-                        author={author}
-                    />
+                    <Grid
+                        className={s.description}
+                        container
+                        direction='column'
+                        justifyContent='center'
+                    >
+                        <TextField
+                            {...name}
+                            label={'Album'}
+                        />
+                        <TextField
+                            {...author}
+                            label={'Author'}
+                        />
+                    </Grid>
                 }
                 {activeStep === 1 &&
                     <FileUpload
@@ -56,11 +66,11 @@ const create = () => {
                     >
                         {picture
                             ? <img
-                                className={s.album_picture}
+                                className={s.picture}
                                 src={globImage}
                                 alt='Album cover'
                             />
-                            : <LibraryMusicIcon className={s.album_picture} />
+                            : <LibraryMusicIcon className={s.picture} />
                         }
                         {globImage
                             ? <Button>Change cover</Button>
