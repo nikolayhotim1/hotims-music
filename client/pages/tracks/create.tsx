@@ -15,7 +15,11 @@ import FileUpload from '../../components/track/FileUpload';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import s from './styles/create.module.scss';
 
-const create = (track: ITrack) => {
+interface createProps {
+    track: ITrack,
+}
+
+const create: React.FC<createProps> = ({ track }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [picture, setPicture]: any = useState();
     const [audio, setAudio]: any = useState();
