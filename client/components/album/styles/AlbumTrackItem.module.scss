@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
 
-    span.track_index {
+    span.index {
         margin: 0 10px;
     }
 
@@ -14,31 +14,31 @@
         height: 75px;
     }
 
-    .track_info {
+    .info {
         width: 400px;
         margin: 0 20px;
 
-        .track_name {
+        .name {
             font-size: 16px;
             color: #1976d2;
         }
 
-        .track_artist {
+        .artist {
             font-size: 14px;
         }
 
-        .track_album {
+        .album {
             font-size: 12px;
             color: orange;
         }
 
-        .track_listens {
+        .listens {
             font-size: 10px;
             color: gray;
         }
     }
 
-    .delete_track {
+    .delete {
         margin-left: auto;
     }
 }

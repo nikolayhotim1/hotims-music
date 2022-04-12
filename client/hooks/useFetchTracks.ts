@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export function useFetchTracks(tracksCount: number) {
@@ -13,8 +13,8 @@ export function useFetchTracks(tracksCount: number) {
             method: 'GET',
             url: 'http://localhost:5000/tracks',
             params: {
-                tracksCount,
-            },
+                tracksCount
+            }
         })
             .then((res) => {
                 setTracks(res.data);
@@ -28,6 +28,6 @@ export function useFetchTracks(tracksCount: number) {
     return {
         loading,
         error,
-        tracks,
+        tracks
     };
 };

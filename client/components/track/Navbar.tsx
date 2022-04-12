@@ -29,24 +29,24 @@ const menuItems = [
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
+    open?: boolean
 };
 
 const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
+    shouldForwardProp: (prop) => prop !== 'open'
 })<AppBarProps>(({ theme, open }) => ({
     transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.leavingScreen
     }),
     ...(open && {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: `${drawerWidth}px`,
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
+            duration: theme.transitions.duration.enteringScreen
+        })
+    })
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -54,7 +54,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
 }));
 
 export default function Navbar() {
@@ -101,8 +101,8 @@ export default function Navbar() {
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
+                        boxSizing: 'border-box'
+                    }
                 }}
                 variant='persistent'
                 anchor='left'
@@ -116,7 +116,7 @@ export default function Navbar() {
                 <Divider />
                 <List>
                     {menuItems.map(({ text, path, Icon }) => (
-                        <ListItem button key={path} onClick={() => router.push(path)} >
+                        <ListItem button key={path} onClick={() => router.push(path)}>
                             <ListItemIcon>
                                 <Icon />
                             </ListItemIcon>

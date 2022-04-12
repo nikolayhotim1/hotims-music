@@ -5,6 +5,7 @@ import { Model, ObjectId } from 'mongoose';
 import { FileService, FileType } from 'src/file/file.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { Album, AlbumDocument } from './schemas/album.schema';
+import { OperateTrackWithAlbumDto } from 'src/track/dto/operate-track-with-album.dto';
 
 type TDeleteResponse = {
     message?: string,
@@ -15,7 +16,7 @@ type TDeleteResponse = {
 export class AlbumService {
     constructor(
         @InjectModel(Album.name) private albumModel: Model<AlbumDocument>,
-        // @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
+        @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
         private fileService: FileService
     ) { }
 
@@ -79,6 +80,11 @@ export class AlbumService {
             name: { $regex: new RegExp(query, 'i') },
         });
         return albums;
+    }
+
+    async fetchAlbumTracks(id: ObjectId): Promise<Track[]> {
+        const album = await this.albumModel.findById(id);
+        return album.tracks;
     }
 
     private getMediaData(picture: any) {

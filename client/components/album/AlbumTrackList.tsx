@@ -1,5 +1,4 @@
-import { Button, Grid } from '@mui/material';
-import { useRouter } from 'next/router';
+import { Grid } from '@mui/material';
 import React from 'react';
 import { IAlbum } from '../../types/albums';
 import TrackList from '../track/TrackList';
@@ -9,20 +8,12 @@ interface AlbumTrackListProps {
     thisAlbum: IAlbum
 }
 
-export const AlbumTrackList: React.FC<AlbumTrackListProps> = ({ thisAlbum }) => {
-    const router = useRouter();
+const AlbumTrackList: React.FC<AlbumTrackListProps> = ({ thisAlbum }) => {
     return (
         <Grid
             container
             direction='column'
         >
-            <Grid
-                container
-                justifyContent='space-between'
-            >
-                <h1>Album Track List</h1>
-                <Button onClick={() => router.push('/tracks/create')}>Load Track</Button>
-            </Grid>
             <TrackList
                 tracks={thisAlbum.tracks}
                 Component={AlbumTrackItem}
@@ -30,3 +21,5 @@ export const AlbumTrackList: React.FC<AlbumTrackListProps> = ({ thisAlbum }) => 
         </Grid>
     );
 };
+
+export default AlbumTrackList;

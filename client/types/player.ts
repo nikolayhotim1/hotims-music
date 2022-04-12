@@ -1,7 +1,8 @@
+import { IAlbum } from './albums';
 import { ITrack } from './track';
 
 export interface PlayerState {
-    active: null | ITrack,
+    active: null | ITrack | IAlbum,
     volume: number,
     duration: number,
     currentTime: number,

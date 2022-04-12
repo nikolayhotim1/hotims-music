@@ -206,11 +206,13 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                 onClick={() => handleClickOnEditIcon(textRef)}
                 className={s.icon}
             /></h2>
-            <pre className={s.lyrics}
+            <pre
+                className={s.lyrics}
                 ref={textRef}
                 contentEditable={isEditable}
                 onBlur={() => handleOnBlurTrackUpdate(textRef, 'text')}
-            >{track.text}
+            >
+                {track.text}
             </pre>
             <h2>Comments</h2>
             <Grid

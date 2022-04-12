@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NextThunkDispatch } from '../store';
 import { fetchAlbums, removeAlbum } from '../store/action-creators/albums';

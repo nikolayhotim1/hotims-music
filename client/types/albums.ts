@@ -29,6 +29,8 @@ export interface AlbumState {
 export enum AlbumActionTypes {
     FETCH_ALBUMS = 'FETCH_ALBUMS',
     FETCH_ALBUMS_ERROR = 'FETCH_ALBUMS_ERROR',
+    FETCH_ALBUM_TRACKS = 'FETCH_ALBUM_TRACKS',
+    FETCH_ALBUM_TRACKS_ERROR = 'FETCH_ALBUM_TRACKS_ERROR',
     SET_ACTIVE_ALBUM = 'SET_ACTIVE_ALBUM',
     REMOVE_ALBUM = 'REMOVE_ALBUM',
     REMOVE_ALBUM_ERROR = 'REMOVE_ALBUM_ERROR',
@@ -47,6 +49,17 @@ interface FetchAlbumsErrorAction {
     type: AlbumActionTypes.FETCH_ALBUMS_ERROR,
     payload: string
 }
+
+interface FetchAlbumTracksAction {
+    type: AlbumActionTypes.FETCH_ALBUM_TRACKS,
+    payload: IAlbum[]
+}
+
+interface FetchAlbumTracksErrorAction {
+    type: AlbumActionTypes.FETCH_ALBUM_TRACKS_ERROR,
+    payload: string
+}
+
 interface SetActiveAlbumAction {
     type: AlbumActionTypes.SET_ACTIVE_ALBUM,
     payload: IAlbum
@@ -84,6 +97,8 @@ interface UpdateAlbumErrorAction {
 export type AlbumAction =
     | FetchAlbumsAction
     | FetchAlbumsErrorAction
+    | FetchAlbumTracksAction
+    | FetchAlbumTracksErrorAction
     | SetActiveAlbumAction
     | RemoveAlbumAction
     | RemoveAlbumErrorAction

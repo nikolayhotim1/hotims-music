@@ -4,18 +4,19 @@ import { NextThunkDispatch, wrapper } from '../../store';
 import { IAlbum } from '../../types/albums';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { fetchAlbums } from '../../store/action-creators/albums';
-import { Button, Grid } from '@mui/material';
+import { fetchAlbums, searchAlbumTracks } from '../../store/action-creators/albums';
+import { Box, Button, Card, Grid, TextField } from '@mui/material';
 import MainLayout from '../../layouts/MainLayout';
 import { useRouter } from 'next/router';
 import EditIcon from '@mui/icons-material/Edit';
 import s from './styles/[id].module.scss';
-import { fetchTracks } from '../../store/action-creators/track';
-import { AlbumTrackList } from '../../components/album/AlbumTrackList';
+import { fetchTracks, searchTracks } from '../../store/action-creators/track';
 import { useOnBlurUpdate } from '../../hooks/useOnBlurUpdate';
 import { useOnPictureUpdate } from '../../hooks/useOnPictureUpdate';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import FileUpload from '../../components/track/FileUpload';
+import AlbumTrackList from '../../components/album/AlbumTrackList';
+import { useDispatch } from 'react-redux';
 
 interface AlbumPageProps {
     serverAlbum: IAlbum
@@ -23,13 +24,34 @@ interface AlbumPageProps {
 
 const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
     const [thisAlbum, setThisAlbum] = useState<IAlbum>(serverAlbum);
-    const { tracks } = useTypedSelector(state => state.track);
+    const { tracks, error } = useTypedSelector(state => state.track);
     const { setActiveAlbum } = useActions();
     const router = useRouter();
     const nameRef: any = useRef<HTMLSpanElement>();
     const artistRef: any = useRef<HTMLSpanElement>();
     const { isEditable, handleClickOnEditIcon, handleOnBlurAlbumUpdate } = useOnBlurUpdate(thisAlbum, setThisAlbum);
     const { setPicture, setGlobTrackPicture, globTrackPicture } = useOnPictureUpdate(thisAlbum);
+    const [query, setQuery] = useState<string>('');
+    const dispatch = useDispatch() as NextThunkDispatch;
+    const [timer, setTimer] = useState<any>(null);
+
+    const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.target.value);
+        if (timer) {
+            clearTimeout(timer);
+        }
+        setTimer(setTimeout(async () => {
+            await dispatch(searchAlbumTracks(thisAlbum._id, e.target.value));
+        }, 500));
+    };
+
+    if (error) {
+        return (
+            <MainLayout>
+                <h1>{error}</h1>
+            </MainLayout>
+        );
+    }
 
     setActiveAlbum(serverAlbum);
 
@@ -130,8 +152,32 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
                         : <Button>Upload cover</Button>
                     }
                 </FileUpload>
+                <Button onClick={() => router.push('/tracks/create')}>Load Track</Button>
             </Grid>
-            <AlbumTrackList thisAlbum={thisAlbum} />
+            <Grid
+                container
+                justifyContent='center'
+            >
+                <Card className={s.albums}>
+                    {/* <Box p={3}>
+                        <Grid
+                            container
+                            justifyContent='space-between'
+                        >
+                            <h1>Track List</h1>
+                            <Button onClick={() => router.push('/tracks/create')}>Load Track</Button>
+                        </Grid>
+                    </Box>
+                    <TextField
+                        className={s.search}
+                        label={'Search Tracks'}
+                        fullWidth
+                        value={query}
+                        onChange={search}
+                    /> */}
+                    <AlbumTrackList thisAlbum={thisAlbum} />
+                </Card>
+            </Grid>
         </MainLayout>
     );
 };

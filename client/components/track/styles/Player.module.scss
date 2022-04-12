@@ -13,49 +13,37 @@
         transform: translateY(100%);
     }
 
-    .track_info {
+    .info {
         width: 400px;
         margin: 0 20px;
 
-        .track_name {
+        .name {
             font-size: 14px;
             color: #1976d2;
         }
 
-        .track_artist {
+        .artist {
             font-size: 12px;
         }
 
-        .track_album {
+        .album {
             font-size: 10px;
             color: orange;
         }
     }
 
-    .volume_up {
+    .volume {
         margin-left: auto;
     }
 }
 
-.track_picture {
+.picture {
     width: 50px;
     height: 50px;
 }
 
-.collapse_btn {
+.collapse {
     position: absolute;
     right: 10px;
     top: -75%;
 }
-
-
-// .player {
-//   height: 60px;
-//   width: 100%;
-//   position: fixed;
-//   bottom: 0;
-//   display: flex;
-//   align-items: center;
-//   padding: 0 10px;
-//   background-color: lightgray;
-// }

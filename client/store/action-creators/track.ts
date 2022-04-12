@@ -30,7 +30,7 @@ export const searchTracks = (query: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.FETCH_TRACKS_ERROR,
-                payload: 'An error occurred while loading tracks'
+                payload: 'An error occurred while searching tracks'
             });
         }
     };
@@ -44,13 +44,13 @@ export const removeTrack = (id: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.REMOVE_TRACK_ERROR,
-                payload: 'We got an error removing track.'
+                payload: 'We got an error removing track'
             });
         }
     };
 };
 
-export const removeTrackFromAlbum = (albumId: string, trackId: string) => {
+export const removeTrackFromAlbum = (albumId: any, trackId: string) => {
     return async (dispatch: Dispatch<TrackAction>) => {
         try {
             const response = await axios.post(
@@ -67,7 +67,7 @@ export const removeTrackFromAlbum = (albumId: string, trackId: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.REMOVE_TRACK_ERROR,
-                payload: 'We got an error removing track.'
+                payload: 'We got an error removing track'
             });
         }
     };
@@ -90,7 +90,7 @@ export const addTrackToAlbum = (albumId: string, trackId: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.ADD_TRACK_TO_ALBUM_ERROR,
-                payload: 'We got an error adding this track into the album.'
+                payload: 'We got an error adding this track into the album'
             });
         }
     };

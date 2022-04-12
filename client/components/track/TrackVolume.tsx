@@ -2,14 +2,14 @@ import React from 'react';
 import s from './styles/TrackProgress.module.scss';
 
 interface TrackVolumeProps {
-    left: number;
-    right: number;
-    onChange: (e: any) => void;
+    left: number,
+    right: number,
+    onChange: (e: any) => void
 }
 
 const TrackVolume: React.FC<TrackVolumeProps> = ({ left, right, onChange }) => {
     return (
-        <div className={s.track_progress}>
+        <div className={s.progress}>
             <input
                 type='range'
                 min={0}

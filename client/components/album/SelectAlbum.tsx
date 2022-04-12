@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -77,7 +77,7 @@ const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
 
     return (
         <Grid
-            className={s.select_album}
+            className={s.select}
             onClick={e => e.stopPropagation()}
         >
             <FormControl variant='outlined'>

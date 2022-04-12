@@ -34,7 +34,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ setFile, setGlobImage, setGlobT
 
     return (
         <div
-            className={s.file_upload}
+            className={s.upload}
             onClick={() => ref.current.click()}
         >
             <input

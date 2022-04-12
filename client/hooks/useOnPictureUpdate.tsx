@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { NextThunkDispatch } from "../store";
-import { updateAlbum } from "../store/action-creators/albums";
-import { IAlbum } from "../types/albums";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NextThunkDispatch } from '../store';
+import { updateAlbum } from '../store/action-creators/albums';
+import { IAlbum } from '../types/albums';
 
 export const useOnPictureUpdate = (thisAlbum: IAlbum) => {
     const [picture, setPicture]: any = useState<File>();
@@ -12,7 +12,7 @@ export const useOnPictureUpdate = (thisAlbum: IAlbum) => {
     const handlePictureUpdate = async () => {
         await dispatch(
             updateAlbum(thisAlbum._id, {
-                picture,
+                picture
             })
         );
     };

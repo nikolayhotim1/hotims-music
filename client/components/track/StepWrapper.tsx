@@ -21,7 +21,7 @@ const StepWrapper: React.FC<StepWrapperProps> = ({ activeStep, steps, children }
                 )}
             </Stepper>
             <Grid
-                className={s.load_track}
+                className={s.load}
                 container
                 justifyContent='center'
             >

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { NextThunkDispatch } from "../store";
-import { updateAlbum } from "../store/action-creators/albums";
-import { IAlbum } from "../types/albums";
-import { TFieldRef } from "../types/jointTypes";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NextThunkDispatch } from '../store';
+import { updateAlbum } from '../store/action-creators/albums';
+import { IAlbum } from '../types/albums';
+import { TFieldRef } from '../types/jointTypes';
 
 export const useOnBlurUpdate = (thisAlbum: IAlbum | any, setThisAlbum: Function) => {
     const [isEditable, setIsEditable] = useState(false);
@@ -29,14 +29,14 @@ export const useOnBlurUpdate = (thisAlbum: IAlbum | any, setThisAlbum: Function)
 
         await dispatch(
             updateAlbum(thisAlbum._id, {
-                [field]: fieldRef.current.textContent,
+                [field]: fieldRef.current.textContent
             })
         );
         setIsEditable(false);
         setCurrentField();
         setThisAlbum({
             ...thisAlbum,
-            [field]: fieldRef?.current?.textContent?.trim(),
+            [field]: fieldRef?.current?.textContent?.trim()
         });
     };
 
@@ -48,6 +48,6 @@ export const useOnBlurUpdate = (thisAlbum: IAlbum | any, setThisAlbum: Function)
     return {
         isEditable,
         handleOnBlurAlbumUpdate,
-        handleClickOnEditIcon,
+        handleClickOnEditIcon
     };
 };

@@ -37,6 +37,11 @@ export class AlbumController {
         return this.albumService.search(query);
     }
 
+    @Get(':id/tracks')
+    fetchAlbumTracks(@Param('id') id: ObjectId) {
+        return this.albumService.fetchAlbumTracks(id);
+    }
+
     @Get(':id')
     getOne(@Param('id') id: ObjectId) {
         return this.albumService.getOne(id);

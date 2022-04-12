@@ -61,7 +61,7 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
                     <PlayArrow />
                 }
             </IconButton>
-            <span className={s.track_index}>
+            <span className={s.index}>
                 {itemIndex < 10 ? '0' + (itemIndex + 1) : itemIndex + 1}
             </span>
             <img
@@ -69,16 +69,16 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
                 alt='Track cover'
             />
             <Grid
-                className={s.track_info}
+                className={s.info}
                 container
                 direction='column'
             >
-                <div className={s.track_name}>{track.name}</div>
-                <div className={s.track_artist}>{track.artist}</div>
+                <div className={s.name}>{track.name}</div>
+                <div className={s.artist}>{track.artist}</div>
                 {track.album?.name && (
-                    <div className={s.track_album}>{track.album.name}</div>
+                    <div className={s.album}>{track.album.name}</div>
                 )}
-                <div className={s.track_listens}>Listens: {track.listens}</div>
+                <div className={s.listens}>Listens: {track.listens}</div>
             </Grid>
             <SelectAlbum track={track} />
             {active
@@ -87,7 +87,7 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
             }
             <IconButton
                 onClick={(e: any) => deleteTrackFromAlbum(e)}
-                className={s.delete_track}
+                className={s.delete}
             >
                 <Delete />
             </IconButton>

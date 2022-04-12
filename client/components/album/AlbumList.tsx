@@ -1,7 +1,7 @@
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { FC } from 'react';
 import { IAlbum } from '../../types/albums';
-import { AlbumItem } from './AlbumItem';
+import AlbumItem from './AlbumItem';
 
 interface AlbumListProps {
     albums: IAlbum[]
@@ -14,9 +14,8 @@ export const AlbumList: FC<AlbumListProps> = ({ albums }) => {
             direction='column'
         >
             <Grid
-                p={3}
+                p={2}
                 container
-                flexWrap='wrap'
             >
                 {albums.length
                     ? albums.map((album) =>

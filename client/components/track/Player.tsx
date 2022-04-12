@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 import { NextThunkDispatch } from '../../store';
-import { fetchTracks, listenTrack } from '../../store/action-creators/track';
+import { listenTrack } from '../../store/action-creators/track';
 
 let audio: HTMLAudioElement;
 
@@ -115,7 +115,7 @@ const Player = () => {
     return (
         <div className={clsx({ [s.player]: true, [s.player_collapsed]: !collapsed })}>
             <Button
-                className={s.collapse_btn}
+                className={s.collapse}
                 variant='contained'
                 onClick={() => setCollapsed(!collapsed)}
             >
@@ -173,22 +173,22 @@ const Player = () => {
                 <SkipNextIcon />
             </IconButton>
             {!active && tracks.length === 0
-                ? <LibraryMusicIcon className={s.track_picture} />
+                ? <LibraryMusicIcon className={s.picture} />
                 : <img
-                    className={s.track_picture}
+                    className={s.picture}
                     src={`http://localhost:5000/${active?.picture}`}
                     alt='Cover'
                 />
             }
             <Grid
-                className={s.track_info}
+                className={s.info}
                 container
                 direction='column'
             >
-                <div className={s.track_name}>{active?.name}</div>
-                <div className={s.track_artist}>{active?.artist}</div>
+                <div className={s.name}>{active?.name}</div>
+                <div className={s.artist}>{active?.artist}</div>
                 {active?.album?.name && (
-                    <div className={s.track_album}>{active.album.name}</div>
+                    <div className={s.album}>{active.album.name}</div>
                 )}
             </Grid>
             <TrackProgress
@@ -196,7 +196,7 @@ const Player = () => {
                 right={duration}
                 onChange={changeCurrentTime}
             />
-            <VolumeUp className={s.volume_up} />
+            <VolumeUp className={s.volume} />
             <TrackVolume
                 left={volume}
                 right={100}

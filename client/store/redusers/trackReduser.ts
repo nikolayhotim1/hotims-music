@@ -11,6 +11,8 @@ export const trackReduser = (state = initialState, action: TrackAction): TrackSt
             return { error: '', tracks: action.payload };
         case TrackActionTypes.FETCH_TRACKS_ERROR:
             return { ...state, error: action.payload };
+        case TrackActionTypes.UPDATE_TRACK_ERROR:
+            return { ...state, error: action.payload };
         default:
             return state;
     }
