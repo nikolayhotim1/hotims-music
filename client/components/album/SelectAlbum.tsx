@@ -9,9 +9,10 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { ITrack } from '../../types/track';
 import { NextThunkDispatch, wrapper } from '../../store';
 import s from './styles/SelectAlbum.module.scss';
-import { Grid } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import axios from 'axios';
-import { fetchAlbums } from '../../store/action-creators/albums';
+import { fetchAlbums, searchAlbums } from '../../store/action-creators/albums';
+import MainLayout from '../../layouts/MainLayout';
 
 interface SelectAlbumProps {
     track: ITrack
@@ -20,7 +21,7 @@ interface SelectAlbumProps {
 export let selectedAlbumForCreateTrack: string;
 
 const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
-    const { albums, activeAlbum } = useTypedSelector(state => state.album);
+    const { albums, activeAlbum, error } = useTypedSelector(state => state.album);
     const openedFrom = {
         TRACK_LIST: track?.album?._id,
         ALBUM_LIST: activeAlbum?._id,
@@ -32,6 +33,26 @@ const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
     );
     const [selectedTrack, setSelectedTrack] = useState(track);
     const dispatch = useDispatch() as NextThunkDispatch;
+    const [query, setQuery] = useState<string>('');
+    const [timer, setTimer] = useState<any>();
+
+    const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.target.value);
+        if (timer) {
+            clearTimeout(timer);
+        }
+        setTimer(setTimeout(async () => {
+            await dispatch(searchAlbums(e.target.value));
+        }, 1000));
+    };
+
+    if (error) {
+        return (
+            <MainLayout>
+                <h1>{error}</h1>
+            </MainLayout>
+        );
+    }
 
     const handleChange: any = async (e: React.ChangeEvent<{ value: unknown }>) => {
         const selectedAlbumId = e.target.value as string;
@@ -77,14 +98,14 @@ const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
 
     return (
         <Grid
-            className={s.select}
+            className={s.container}
             onClick={e => e.stopPropagation()}
         >
             <FormControl variant='outlined'>
-                <InputLabel id='demo-simple-select-outlined-label'>Album</InputLabel>
+                <InputLabel id='select-label'>Album</InputLabel>
                 <Select
-                    labelId='demo-simple-select-outlined-label'
-                    id='demo-simple-select-outlined'
+                    labelId='select-label'
+                    id='select'
                     value={selectedAlbumId}
                     onChange={handleChange}
                     label='Album'
@@ -93,6 +114,13 @@ const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
                     <MenuItem value=''>
                         <em>No Album</em>
                     </MenuItem>
+                    <TextField
+                        type='search'
+                        label={'Search Albums'}
+                        fullWidth
+                        value={query}
+                        onChange={search}
+                    />
                     {albums.map(album => {
                         return (
                             <MenuItem key={album._id} value={album._id}>

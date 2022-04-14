@@ -2,7 +2,7 @@ import { IAlbum } from './albums';
 import { ITrack } from './track';
 
 export interface PlayerState {
-    active: null | ITrack | IAlbum,
+    active: null | ITrack,
     volume: number,
     duration: number,
     currentTime: number,

@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import StepWrapper from '../../components/track/StepWrapper';
 import FileUpload from '../../components/track/FileUpload';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import s from './styles/create.module.scss';
 
 interface createProps {
@@ -125,7 +126,7 @@ const create: React.FC<createProps> = ({ track }) => {
                                 controls
                                 src={globTrack}
                             />
-                            : <h2 className={s.track} ><em>No audio</em></h2>
+                            : <AudiotrackIcon className={s.track} />
                         }
 
                         {globTrack

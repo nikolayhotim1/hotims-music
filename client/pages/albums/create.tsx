@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import StepWrapper from '../../components/track/StepWrapper';
 import FileUpload from '../../components/track/FileUpload';
-import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import AlbumIcon from '@mui/icons-material/Album';
 import s from './styles/create.module.scss';
 
 const create = () => {
@@ -70,7 +70,7 @@ const create = () => {
                                 src={globImage}
                                 alt='Album cover'
                             />
-                            : <LibraryMusicIcon className={s.picture} />
+                            : <AlbumIcon className={s.picture} />
                         }
                         {globImage
                             ? <Button>Change cover</Button>

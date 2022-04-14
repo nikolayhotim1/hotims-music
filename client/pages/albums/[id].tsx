@@ -5,7 +5,7 @@ import { IAlbum } from '../../types/albums';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { fetchAlbums, searchAlbumTracks } from '../../store/action-creators/albums';
-import { Box, Button, Card, Grid, TextField } from '@mui/material';
+import { Button, Card, Grid } from '@mui/material';
 import MainLayout from '../../layouts/MainLayout';
 import { useRouter } from 'next/router';
 import EditIcon from '@mui/icons-material/Edit';
@@ -159,22 +159,6 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
                 justifyContent='center'
             >
                 <Card className={s.albums}>
-                    {/* <Box p={3}>
-                        <Grid
-                            container
-                            justifyContent='space-between'
-                        >
-                            <h1>Track List</h1>
-                            <Button onClick={() => router.push('/tracks/create')}>Load Track</Button>
-                        </Grid>
-                    </Box>
-                    <TextField
-                        className={s.search}
-                        label={'Search Tracks'}
-                        fullWidth
-                        value={query}
-                        onChange={search}
-                    /> */}
                     <AlbumTrackList thisAlbum={thisAlbum} />
                 </Card>
             </Grid>

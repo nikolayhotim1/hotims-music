@@ -6,8 +6,8 @@
     align-items: center;
 
     img {
-        width: 75px;
-        height: 75px;
+        width: calc(250px / 3);
+        height: calc(250px / 3);
     }
 
     .info {
