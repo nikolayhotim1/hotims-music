@@ -1,8 +1,3 @@
-/**
- * transforms time in second to hh:mm:ss format (hours can be missing)
- * @param time time in seconds
- * @returns string
- */
 function formatTrackTime(time: number) {
     time = Math.round(+time);
     let formattedTime = '';

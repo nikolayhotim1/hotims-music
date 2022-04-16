@@ -14,14 +14,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { fetchAlbums } from '../../store/action-creators/albums';
 import SelectAlbum from '../../components/album/SelectAlbum';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import FileUpload from '../../components/track/FileUpload';
+import FileUpload from '../../components/shared/FileUpload';
 
 interface TrackPageProps {
     serverTrack: ITrack
 }
 
 const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
-    const [track, setTrack] = useState<ITrack | any>(serverTrack);
+    const [track, setTrack] = useState<ITrack>(serverTrack);
     const router = useRouter();
     const username = useInput('');
     const text = useInput('');
@@ -53,7 +53,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
         field: string
     ) => {
         const fieldContent = fieldRef.current.textContent;
-        if (track[field] === fieldContent) {
+        if (track.field === fieldContent) {
             setIsEditable(false);
             return;
         }
@@ -147,7 +147,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(nameRef)}
-                            className={s.icon}
+                            className={s.edit}
                         />
                     </h1>
                     <h2>
@@ -161,7 +161,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(artistRef)}
-                            className={s.icon}
+                            className={s.edit}
                         />
                     </h2>
                     {track.album?.name && (
@@ -204,7 +204,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
             </Grid>
             <h2>Lyrics<EditIcon
                 onClick={() => handleClickOnEditIcon(textRef)}
-                className={s.icon}
+                className={s.edit}
             /></h2>
             <pre
                 className={s.lyrics}

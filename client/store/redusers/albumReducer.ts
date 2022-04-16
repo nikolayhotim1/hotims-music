@@ -3,7 +3,6 @@ import { AlbumAction, AlbumActionTypes, AlbumState } from '../../types/albums';
 const InitialState: AlbumState = {
     albums: [],
     activeAlbum: null,
-    removeResponse: null,
     error: ''
 };
 
@@ -23,13 +22,9 @@ export const albumReducer = (
         case AlbumActionTypes.SET_ACTIVE_ALBUM:
             return { ...state, activeAlbum: action.payload };
         case AlbumActionTypes.REMOVE_ALBUM:
-            return { ...state, removeResponse: action.payload };
+            return { ...state };
         case AlbumActionTypes.REMOVE_ALBUM_ERROR:
-            return { ...state, removeResponse: { error: action.payload } };
-        case AlbumActionTypes.SET_RESPONSE_ERROR:
-            return { ...state, removeResponse: { error: action.payload } };
-        case AlbumActionTypes.SET_RESPONSE_MESSAGE:
-            return { ...state, removeResponse: { message: action.payload } };
+            return { ...state };
         default:
             return state;
     }

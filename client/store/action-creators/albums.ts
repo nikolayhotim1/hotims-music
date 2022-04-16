@@ -48,22 +48,6 @@ export const fetchAlbumTracks = (id: string) => {
     };
 };
 
-export const searchAlbumTracks = (id: string, query: string) => {
-    return async (dispatch: Dispatch<AlbumAction>) => {
-        try {
-            const response = await axios.get(
-                `http://localhost:5000/albums/${id}/tracks/search?query=${query}`
-            );
-            dispatch({ type: AlbumActionTypes.FETCH_ALBUM_TRACKS, payload: response.data });
-        } catch (e) {
-            dispatch({
-                type: AlbumActionTypes.FETCH_ALBUM_TRACKS_ERROR,
-                payload: 'We got an error searching album tracks'
-            });
-        }
-    };
-};
-
 export const removeAlbum = (id: string) => {
     return async (dispatch: Dispatch<AlbumAction>) => {
         try {
@@ -78,16 +62,8 @@ export const removeAlbum = (id: string) => {
     };
 };
 
-export const setActiveAlbum = (payload: IAlbum): AlbumAction => {
+export const setActiveAlbum = (payload: IAlbum | any): AlbumAction => {
     return { type: AlbumActionTypes.SET_ACTIVE_ALBUM, payload };
-};
-
-export const setResponseError = (payload: string): AlbumAction => {
-    return { type: AlbumActionTypes.SET_RESPONSE_ERROR, payload };
-};
-
-export const setResponseMessage = (payload: string): AlbumAction => {
-    return { type: AlbumActionTypes.SET_RESPONSE_MESSAGE, payload };
 };
 
 export const updateAlbum = (albumId: string, data: any) => {

@@ -4,10 +4,10 @@ import MainLayout from '../../layouts/MainLayout';
 import { useInput } from '../../hooks/useInput';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import StepWrapper from '../../components/track/StepWrapper';
-import FileUpload from '../../components/track/FileUpload';
 import AlbumIcon from '@mui/icons-material/Album';
 import s from './styles/create.module.scss';
+import StepWrapper from '../../components/shared/StepWrapper';
+import FileUpload from '../../components/shared/FileUpload';
 
 const create = () => {
     const [activeStep, setActiveStep] = useState(0);

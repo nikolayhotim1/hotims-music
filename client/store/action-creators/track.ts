@@ -113,7 +113,7 @@ export const listenTrack = (trackId: string) => {
     };
 };
 
-export const updateTrack = (trackId: string, data: any) => {
+export const updateTrack = (trackId: string, data: ITrackUpdateData | any) => {
     const formattedData = new FormData();
     for (let key in data) {
         formattedData.append(key, data[key]);

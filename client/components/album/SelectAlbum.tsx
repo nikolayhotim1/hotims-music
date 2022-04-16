@@ -22,19 +22,23 @@ export let selectedAlbumForCreateTrack: string;
 
 const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
     const { albums, activeAlbum, error } = useTypedSelector(state => state.album);
+    const [selectedTrack, setSelectedTrack] = useState(track);
+    const dispatch = useDispatch() as NextThunkDispatch;
+    const [query, setQuery] = useState<string>('');
+    const [timer, setTimer] = useState<any>();
+
     const openedFrom = {
         TRACK_LIST: track?.album?._id,
         ALBUM_LIST: activeAlbum?._id,
         CREATE_TRACK: !track,
         ANOTHER_PLACE: ''
     };
+
     const [selectedAlbumId, setSelectedAlbumId] = useState<string>(
-        openedFrom.TRACK_LIST || openedFrom.ALBUM_LIST || openedFrom.ANOTHER_PLACE
+        openedFrom.TRACK_LIST
+        || openedFrom.ALBUM_LIST
+        || openedFrom.ANOTHER_PLACE
     );
-    const [selectedTrack, setSelectedTrack] = useState(track);
-    const dispatch = useDispatch() as NextThunkDispatch;
-    const [query, setQuery] = useState<string>('');
-    const [timer, setTimer] = useState<any>();
 
     const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
@@ -62,6 +66,7 @@ const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
             selectedAlbumForCreateTrack = selectedAlbumId;
             return;
         }
+
         if (selectedAlbumId === '') {
             await dispatch(
                 removeTrackFromAlbum(
@@ -75,6 +80,7 @@ const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
             }
             setSelectedTrack(prev => ({ ...prev, album: undefined }));
         }
+
         if (selectedTrack.album?._id || activeAlbum?._id) {
             console.log('removing selectedTrack from album...');
             await dispatch(
@@ -85,14 +91,16 @@ const SelectAlbum: React.FC<SelectAlbumProps> = ({ track }) => {
             );
             setSelectedTrack(prev => ({ ...prev, album: undefined }));
         }
+
         await dispatch(addTrackToAlbum(selectedAlbumId, selectedTrack._id));
         const album = albums.find(album => album._id === selectedAlbumId);
+
         if (activeAlbum?._id) {
             await dispatch(fetchTracks());
             return;
         }
-        setSelectedTrack(prev => ({ ...prev, album }));
 
+        setSelectedTrack(prev => ({ ...prev, album }));
         await dispatch(fetchTracks());
     };
 

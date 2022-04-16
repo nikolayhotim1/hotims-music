@@ -22,7 +22,7 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
     const router = useRouter();
     const dispatch = useDispatch() as NextThunkDispatch;
     const { pauseTrack, playTrack, setActiveTrack } = useActions();
-    const { duration, currentTime, pause } = useTypedSelector(state => state.player);
+    const { currentTime, pause } = useTypedSelector(state => state.player);
     const { activeAlbum } = useTypedSelector(state => state.album);
 
     const play = (e: { stopPropagation: () => void; }) => {
@@ -75,14 +75,14 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
             >
                 <div className={s.name}>{track.name}</div>
                 <div className={s.artist}>{track.artist}</div>
-                {track.album?.name && (
-                    <div className={s.album}>{track.album.name}</div>
+                {activeAlbum?.name && (
+                    <div className={s.album}>{activeAlbum.name}</div>
                 )}
                 <div className={s.listens}>Listens: {track.listens}</div>
             </Grid>
             <SelectAlbum track={track} />
             {active
-                ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(duration)}</div>
+                ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(track.duration)}</div>
                 : <div>{formatTrackTime(track.duration)}</div>
             }
             <IconButton

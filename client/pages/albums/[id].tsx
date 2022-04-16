@@ -4,19 +4,17 @@ import { NextThunkDispatch, wrapper } from '../../store';
 import { IAlbum } from '../../types/albums';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { fetchAlbums, searchAlbumTracks } from '../../store/action-creators/albums';
+import { fetchAlbums, setActiveAlbum } from '../../store/action-creators/albums';
 import { Button, Card, Grid } from '@mui/material';
 import MainLayout from '../../layouts/MainLayout';
 import { useRouter } from 'next/router';
 import EditIcon from '@mui/icons-material/Edit';
 import s from './styles/[id].module.scss';
-import { fetchTracks, searchTracks } from '../../store/action-creators/track';
 import { useOnBlurUpdate } from '../../hooks/useOnBlurUpdate';
 import { useOnPictureUpdate } from '../../hooks/useOnPictureUpdate';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import FileUpload from '../../components/track/FileUpload';
 import AlbumTrackList from '../../components/album/AlbumTrackList';
-import { useDispatch } from 'react-redux';
+import FileUpload from '../../components/shared/FileUpload';
 
 interface AlbumPageProps {
     serverAlbum: IAlbum
@@ -31,19 +29,6 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
     const artistRef: any = useRef<HTMLSpanElement>();
     const { isEditable, handleClickOnEditIcon, handleOnBlurAlbumUpdate } = useOnBlurUpdate(thisAlbum, setThisAlbum);
     const { setPicture, setGlobTrackPicture, globTrackPicture } = useOnPictureUpdate(thisAlbum);
-    const [query, setQuery] = useState<string>('');
-    const dispatch = useDispatch() as NextThunkDispatch;
-    const [timer, setTimer] = useState<any>(null);
-
-    const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        setQuery(e.target.value);
-        if (timer) {
-            clearTimeout(timer);
-        }
-        setTimer(setTimeout(async () => {
-            await dispatch(searchAlbumTracks(thisAlbum._id, e.target.value));
-        }, 500));
-    };
 
     if (error) {
         return (
@@ -121,7 +106,7 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(nameRef)}
-                            className={s.icon}
+                            className={s.edit}
                         />
                     </h1>
                     <h2>
@@ -135,7 +120,7 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
                         </span>
                         <EditIcon
                             onClick={() => handleClickOnEditIcon(artistRef)}
-                            className={s.icon}
+                            className={s.edit}
                         />
                     </h2>
                     <h3>Tracks: {thisAlbum.tracks.length}</h3>
@@ -172,14 +157,14 @@ export const getServerSideProps = wrapper.getServerSideProps(store =>
     async ({ params }) => {
         const dispatch = store.dispatch as NextThunkDispatch;
         await dispatch(fetchAlbums());
-        await dispatch(fetchTracks());
+        dispatch(setActiveAlbum(params?.id));
         const response = await axios.get(
             `http://localhost:5000/albums/${params?.id}`
         );
         return {
             props: {
                 serverAlbum: response.data
-            },
+            }
         };
     }
 );

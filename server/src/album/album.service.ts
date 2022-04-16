@@ -5,7 +5,6 @@ import { Model, ObjectId } from 'mongoose';
 import { FileService, FileType } from 'src/file/file.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { Album, AlbumDocument } from './schemas/album.schema';
-import { OperateTrackWithAlbumDto } from 'src/track/dto/operate-track-with-album.dto';
 
 type TDeleteResponse = {
     message?: string,
@@ -24,7 +23,7 @@ export class AlbumService {
         const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
         const album = await this.albumModel.create({
             ...dto,
-            picture: picturePath,
+            picture: picturePath
         });
         return album;
     }
@@ -32,18 +31,18 @@ export class AlbumService {
     async updateAlbum(
         id: ObjectId,
         dto: CreateAlbumDto,
-        picture?: any,
+        picture?: any
     ): Promise<Album> {
         const media = this.getMediaData(picture);
         const dataForUpdate = {
             ...dto,
-            ...media,
+            ...media
         };
         this.deleteOldMediaData(id, media);
         const album = await this.albumModel.findOneAndUpdate(
             { _id: id },
             dataForUpdate,
-            { new: true, useFindAndModify: false },
+            { new: true, useFindAndModify: false }
         );
         return album;
     }
@@ -61,15 +60,20 @@ export class AlbumService {
         return album;
     }
 
+    async setActiveAlbum(id: ObjectId): Promise<Album> {
+        const album = await this.albumModel.findById(id).populate('tracks');
+        return album;
+    }
+
     async delete(id: ObjectId): Promise<TDeleteResponse> {
         try {
             const album = await this.albumModel.findById(id);
-            if (album?.tracks?.length > 0) {
+            if (album.tracks?.length > 0) {
                 throw new Error('Cannot remove album, because it has tracks in it');
             }
             album.deleteOne();
             this.fileService.removeFile(album.picture);
-            return { message: 'Album has been successfully removed.' };
+            return { message: 'Album has been successfully removed' };
         } catch (e) {
             return { error: e.message };
         }
@@ -77,14 +81,14 @@ export class AlbumService {
 
     async search(query: string): Promise<Album[]> {
         const albums = await this.albumModel.find({
-            name: { $regex: new RegExp(query, 'i') },
+            name: { $regex: new RegExp(query, 'i') }
         });
         return albums;
     }
 
-    async fetchAlbumTracks(id: ObjectId): Promise<Track[]> {
-        const album = await this.albumModel.findById(id);
-        return album.tracks;
+    async fetchAlbumTracks(id: ObjectId): Promise<Album> {
+        const album = await this.albumModel.findById(id).populate('tracks');
+        return album;
     }
 
     private getMediaData(picture: any) {

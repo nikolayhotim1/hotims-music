@@ -9,25 +9,25 @@ export type TrackDocument = Track & Document;
 @Schema()
 export class Track {
     @Prop()
-    name?: string;
+    name: string;
 
     @Prop()
-    artist?: string;
+    artist: string;
 
     @Prop()
-    text?: string;
+    text: string;
 
     @Prop()
     listens: number;
 
     @Prop()
-    picture?: string;
+    picture: string;
 
     @Prop()
-    audio?: string;
+    audio: string;
 
     @Prop()
-    duration?: number;
+    duration: number;
 
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
     comments: Comment[];

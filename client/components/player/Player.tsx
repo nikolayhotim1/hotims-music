@@ -19,19 +19,19 @@ import { listenTrack } from '../../store/action-creators/track';
 
 let audio: HTMLAudioElement;
 
-export const getAudio = () => {
-    return audio;
-};
-
 const Player = () => {
-    const { pause, volume, active, duration, currentTime, collapsed } = useTypedSelector(state => state.player);
+    const { pause, volume, active, currentTime, collapsed } = useTypedSelector(state => state.player);
     const { tracks } = useTypedSelector(state => state.track);
-    const { pauseTrack, setDuration, playTrack, setVolume, setCurrentTime, setActiveTrack, setCollapsed } = useActions();
+    const { activeAlbum, albums } = useTypedSelector(state => state.album);
+    const { pauseTrack, playTrack, setVolume, setCurrentTime, setActiveTrack, setActiveAlbum, setCollapsed } = useActions();
     const dispatch = useDispatch() as NextThunkDispatch;
 
     useEffect(() => {
         if (!active && tracks.length) {
             setActiveTrack(tracks[0]);
+        } else if (!active && albums.length) {
+            setActiveAlbum(albums[0]);
+            setActiveTrack(activeAlbum.tracks[0]);
         }
     }, []);
 
@@ -53,17 +53,29 @@ const Player = () => {
 
     const nextAudio = () => {
         if (active) {
-            let nextTrackIndex = tracks.indexOf(active) + 1;
-            nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
-            setActiveTrack(tracks[nextTrackIndex]);
+            if (tracks.length) {
+                let nextTrackIndex = tracks.indexOf(active) + 1;
+                nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
+                setActiveTrack(tracks[nextTrackIndex]);
+            } else if (activeAlbum.tracks.length) {
+                let nextTrackIndex = activeAlbum.tracks.indexOf(active) + 1;
+                nextTrackIndex = activeAlbum.tracks[nextTrackIndex] ? nextTrackIndex : 0;
+                setActiveTrack(activeAlbum.tracks[nextTrackIndex]);
+            }
         }
     };
 
     const prevAudio = () => {
         if (active) {
-            let nextTrackIndex = tracks.indexOf(active) - 1;
-            nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : tracks.length - 1;
-            setActiveTrack(tracks[nextTrackIndex]);
+            if (tracks.length) {
+                let nextTrackIndex = tracks.indexOf(active) - 1;
+                nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : tracks.length - 1;
+                setActiveTrack(tracks[nextTrackIndex]);
+            } else if (activeAlbum.tracks.length) {
+                let nextTrackIndex = activeAlbum.tracks.indexOf(active) - 1;
+                nextTrackIndex = activeAlbum.tracks[nextTrackIndex] ? nextTrackIndex : activeAlbum.tracks.length - 1;
+                setActiveTrack(activeAlbum.tracks[nextTrackIndex]);
+            }
         }
     };
 
@@ -72,12 +84,9 @@ const Player = () => {
             audio.pause();
             audio.src = `http://localhost:5000/${active.audio}`;
             audio.volume = volume / 100;
-            audio.onloadedmetadata = () => {
-                setDuration((audio.duration));
-            };
             audio.currentTime = currentTime;
             audio.ontimeupdate = () => {
-                setCurrentTime((audio.currentTime));
+                setCurrentTime(Math.ceil(audio.currentTime));
             };
             audio.onended = async () => {
                 try {
@@ -85,7 +94,7 @@ const Player = () => {
                 } catch (e: any) {
                     console.log(e.message);
                 }
-                if (tracks.length === 1) {
+                if ((tracks.length === 1) || (activeAlbum.tracks.length === 1)) {
                     pauseTrack();
                     playTrack();
                 }
@@ -125,7 +134,7 @@ const Player = () => {
                 }
             </Button>
             <IconButton
-                disabled={tracks.length === 0}
+                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
                 onClick={() => {
                     if (active) {
                         if (tracks.length === 1) {
@@ -138,7 +147,7 @@ const Player = () => {
                 <SkipPreviousIcon />
             </IconButton>
             <IconButton
-                disabled={tracks.length === 0}
+                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
                 onClick={() => {
                     if (active) {
                         pauseTrack();
@@ -149,7 +158,7 @@ const Player = () => {
                 <StopIcon />
             </IconButton>
             <IconButton
-                disabled={tracks.length === 0}
+                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
                 onClick={() => {
                     pause ? playTrack() : pauseTrack()
                 }}
@@ -160,7 +169,7 @@ const Player = () => {
                 }
             </IconButton>
             <IconButton
-                disabled={tracks.length === 0}
+                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
                 onClick={() => {
                     if (active) {
                         if (tracks.length === 1) {
@@ -172,7 +181,7 @@ const Player = () => {
             >
                 <SkipNextIcon />
             </IconButton>
-            {!active && tracks.length === 0
+            {!active && tracks.length === 0 && activeAlbum.tracks.length === 0
                 ? <LibraryMusicIcon className={s.picture} />
                 : <img
                     className={s.picture}
@@ -187,13 +196,13 @@ const Player = () => {
             >
                 <div className={s.name}>{active?.name}</div>
                 <div className={s.artist}>{active?.artist}</div>
-                {active?.album?.name && (
-                    <div className={s.album}>{active.album.name}</div>
+                {(active?.album?.name || activeAlbum?.name) && (
+                    <div className={s.album}>{active?.album?.name || activeAlbum?.name}</div>
                 )}
             </Grid>
             <TrackProgress
                 left={currentTime}
-                right={duration}
+                right={active?.duration || currentTime}
                 onChange={changeCurrentTime}
             />
             <VolumeUp className={s.volume} />

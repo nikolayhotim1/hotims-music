@@ -11,8 +11,8 @@ export enum FileType {
 @Injectable()
 export class FileService {
     createFile(
-        type?: FileType,
-        file?: { originalname: string; buffer: string | NodeJS.ArrayBufferView; }
+        type: FileType,
+        file: { originalname: string; buffer: string | NodeJS.ArrayBufferView; }
     ): string {
         try {
             const fileExtension = file.originalname.split('.').pop();
@@ -28,7 +28,7 @@ export class FileService {
         }
     }
 
-    removeFile(filePath?: string) {
+    removeFile(filePath: string) {
         const fullFilePath = path.resolve(__dirname, '..', 'static', filePath);
         fs.unlinkSync(fullFilePath);
     }

@@ -47,6 +47,11 @@ export class AlbumController {
         return this.albumService.getOne(id);
     }
 
+    @Get(':id')
+    setActiveAlbum(@Param('id') id: ObjectId) {
+        return this.albumService.getOne(id);
+    }
+
     @Delete(':id')
     delete(@Param('id') id: ObjectId) {
         return this.albumService.delete(id);

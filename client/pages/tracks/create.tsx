@@ -10,11 +10,11 @@ import SelectAlbum, { selectedAlbumForCreateTrack } from '../../components/album
 import { ITrack } from '../../types/track';
 import { addTrackToAlbum, fetchTracks } from '../../store/action-creators/track';
 import { useDispatch } from 'react-redux';
-import StepWrapper from '../../components/track/StepWrapper';
-import FileUpload from '../../components/track/FileUpload';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import s from './styles/create.module.scss';
+import StepWrapper from '../../components/shared/StepWrapper';
+import FileUpload from '../../components/shared/FileUpload';
 
 interface createProps {
     track: ITrack,

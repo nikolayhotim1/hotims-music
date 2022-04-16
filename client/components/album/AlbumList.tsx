@@ -7,7 +7,7 @@ interface AlbumListProps {
     albums: IAlbum[]
 }
 
-export const AlbumList: FC<AlbumListProps> = ({ albums }) => {
+const AlbumList: FC<AlbumListProps> = ({ albums }) => {
     return (
         <Grid
             container
@@ -35,3 +35,5 @@ export const AlbumList: FC<AlbumListProps> = ({ albums }) => {
         </Grid>
     );
 };
+
+export default AlbumList;

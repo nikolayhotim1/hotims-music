@@ -8,15 +8,16 @@ export interface IComment {
 
 export interface ITrack {
     _id: string,
-    name?: string,
-    artist?: string,
-    text?: string,
+    name: string,
+    artist: string,
+    text: string,
     listens: number,
-    picture?: string,
-    audio?: string,
+    picture: string,
+    audio: string,
     duration: number,
     comments: IComment[],
-    album?: IAlbum
+    album?: IAlbum,
+    field?: string
 };
 
 export interface TrackState {

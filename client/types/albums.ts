@@ -14,15 +14,9 @@ export interface IAlbumUpdateData {
     picture?: File
 };
 
-type TRemoveResponse = {
-    message?: string,
-    error?: string
-};
-
 export interface AlbumState {
     albums: IAlbum[],
-    activeAlbum: null | IAlbum,
-    removeResponse: null | TRemoveResponse,
+    activeAlbum: IAlbum,
     error: string
 };
 
@@ -34,8 +28,6 @@ export enum AlbumActionTypes {
     SET_ACTIVE_ALBUM = 'SET_ACTIVE_ALBUM',
     REMOVE_ALBUM = 'REMOVE_ALBUM',
     REMOVE_ALBUM_ERROR = 'REMOVE_ALBUM_ERROR',
-    SET_RESPONSE_ERROR = 'SET_RESPONSE_ERROR',
-    SET_RESPONSE_MESSAGE = 'SET_RESPONSE_MESSAGE',
     UPDATE_ALBUM = 'UPDATE_ALBUM',
     UPDATE_ALBUM_ERROR = 'UPDATE_ALBUM_ERROR'
 }
@@ -74,16 +66,6 @@ interface RemoveAlbumErrorAction {
     payload: string
 }
 
-interface SetResponseErrorAction {
-    type: AlbumActionTypes.SET_RESPONSE_ERROR,
-    payload: string
-}
-
-interface SetResponseMessageAction {
-    type: AlbumActionTypes.SET_RESPONSE_MESSAGE,
-    payload: string
-}
-
 interface UpdateAlbumAction {
     type: AlbumActionTypes.UPDATE_ALBUM,
     payload: IAlbum
@@ -102,7 +84,5 @@ export type AlbumAction =
     | SetActiveAlbumAction
     | RemoveAlbumAction
     | RemoveAlbumErrorAction
-    | SetResponseErrorAction
-    | SetResponseMessageAction
     | UpdateAlbumAction
     | UpdateAlbumErrorAction;
