@@ -30,14 +30,6 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
     const { isEditable, handleClickOnEditIcon, handleOnBlurAlbumUpdate } = useOnBlurUpdate(thisAlbum, setThisAlbum);
     const { setPicture, setGlobTrackPicture, globTrackPicture } = useOnPictureUpdate(thisAlbum);
 
-    if (error) {
-        return (
-            <MainLayout>
-                <h1>{error}</h1>
-            </MainLayout>
-        );
-    }
-
     setActiveAlbum(serverAlbum);
 
     useEffect(() => {
@@ -67,6 +59,14 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
         setThisAlbum({ ...thisAlbum, tracks: belongedTracks });
     };
 
+    if (error) {
+        return (
+            <MainLayout>
+                <h1>{error}</h1>
+            </MainLayout>
+        );
+    }
+
     return (
         <MainLayout
             title={`Hotims Music - ${thisAlbum.name}, ${thisAlbum.author}`}
@@ -78,6 +78,13 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
                 onClick={() => router.push('/albums')}
             >
                 To Album List
+            </Button>
+            <Button
+                className={s.list}
+                variant={'outlined'}
+                onClick={() => router.push('/tracks')}
+            >
+                To Track List
             </Button>
             <Grid
                 container

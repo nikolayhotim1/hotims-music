@@ -27,11 +27,13 @@ const Player = () => {
     const dispatch = useDispatch() as NextThunkDispatch;
 
     useEffect(() => {
-        if (!active && tracks.length) {
+        if (!active && tracks?.length) {
             setActiveTrack(tracks[0]);
-        } else if (!active && albums.length) {
+        } else if (!active && albums?.length) {
             setActiveAlbum(albums[0]);
-            setActiveTrack(activeAlbum.tracks[0]);
+            if (activeAlbum?.tracks?.length) {
+                setActiveTrack(activeAlbum.tracks[0]);
+            }
         }
     }, []);
 
@@ -134,7 +136,7 @@ const Player = () => {
                 }
             </Button>
             <IconButton
-                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
+                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
                 onClick={() => {
                     if (active) {
                         if (tracks.length === 1) {
@@ -147,7 +149,7 @@ const Player = () => {
                 <SkipPreviousIcon />
             </IconButton>
             <IconButton
-                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
+                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
                 onClick={() => {
                     if (active) {
                         pauseTrack();
@@ -158,7 +160,7 @@ const Player = () => {
                 <StopIcon />
             </IconButton>
             <IconButton
-                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
+                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
                 onClick={() => {
                     pause ? playTrack() : pauseTrack()
                 }}
@@ -169,7 +171,7 @@ const Player = () => {
                 }
             </IconButton>
             <IconButton
-                disabled={tracks.length === 0 && activeAlbum.tracks.length === 0}
+                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
                 onClick={() => {
                     if (active) {
                         if (tracks.length === 1) {
@@ -181,12 +183,12 @@ const Player = () => {
             >
                 <SkipNextIcon />
             </IconButton>
-            {!active && tracks.length === 0 && activeAlbum.tracks.length === 0
+            {!active && (tracks?.length === 0 || activeAlbum?.tracks?.length === 0)
                 ? <LibraryMusicIcon className={s.picture} />
                 : <img
                     className={s.picture}
                     src={`http://localhost:5000/${active?.picture}`}
-                    alt='Cover'
+                    alt='Track Cover'
                 />
             }
             <Grid
@@ -196,9 +198,9 @@ const Player = () => {
             >
                 <div className={s.name}>{active?.name}</div>
                 <div className={s.artist}>{active?.artist}</div>
-                {(active?.album?.name || activeAlbum?.name) && (
+                {(active?.album?.name || activeAlbum?.name) &&
                     <div className={s.album}>{active?.album?.name || activeAlbum?.name}</div>
-                )}
+                }
             </Grid>
             <TrackProgress
                 left={currentTime}

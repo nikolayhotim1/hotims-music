@@ -15,6 +15,7 @@ import { fetchAlbums } from '../../store/action-creators/albums';
 import SelectAlbum from '../../components/album/SelectAlbum';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import FileUpload from '../../components/shared/FileUpload';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 interface TrackPageProps {
     serverTrack: ITrack
@@ -35,6 +36,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
     const nameRef: any = useRef<HTMLSpanElement>();
     const artistRef: any = useRef<HTMLSpanElement>();
     const textRef: any = useRef<HTMLSpanElement>();
+    const { error } = useTypedSelector(state => state.track);
 
     useEffect(() => {
         if (isEditable) {
@@ -93,6 +95,14 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
             console.log(e);
         }
     };
+
+    if (error) {
+        return (
+            <MainLayout>
+                <h1>{error}</h1>
+            </MainLayout>
+        );
+    }
 
     return (
         <MainLayout

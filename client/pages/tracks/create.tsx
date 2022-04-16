@@ -15,9 +15,10 @@ import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import s from './styles/create.module.scss';
 import StepWrapper from '../../components/shared/StepWrapper';
 import FileUpload from '../../components/shared/FileUpload';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 interface createProps {
-    track: ITrack,
+    track: ITrack
 }
 
 const create: React.FC<createProps> = ({ track }) => {
@@ -32,6 +33,7 @@ const create: React.FC<createProps> = ({ track }) => {
     const text = useInput('');
     const router = useRouter();
     const dispatch = useDispatch() as NextThunkDispatch;
+    const { error } = useTypedSelector(state => state.track);
 
     const next = async () => {
         if (activeStep < 2) {
@@ -63,6 +65,14 @@ const create: React.FC<createProps> = ({ track }) => {
     const back = () => {
         setActiveStep(prev => prev - 1);
     };
+
+    if (error) {
+        return (
+            <MainLayout>
+                <h1>{error}</h1>
+            </MainLayout>
+        );
+    }
 
     return (
         <MainLayout>

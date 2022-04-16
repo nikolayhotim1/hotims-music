@@ -8,6 +8,7 @@ import AlbumIcon from '@mui/icons-material/Album';
 import s from './styles/create.module.scss';
 import StepWrapper from '../../components/shared/StepWrapper';
 import FileUpload from '../../components/shared/FileUpload';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 const create = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -16,6 +17,7 @@ const create = () => {
     const name = useInput('');
     const author = useInput('');
     const router = useRouter();
+    const { error } = useTypedSelector(state => state.track);
 
     const next = () => {
         if (activeStep < 1) {
@@ -34,6 +36,14 @@ const create = () => {
     const back = () => {
         setActiveStep(prev => prev - 1);
     };
+
+    if (error) {
+        return (
+            <MainLayout>
+                <h1>{error}</h1>
+            </MainLayout>
+        );
+    }
 
     return (
         <MainLayout>
