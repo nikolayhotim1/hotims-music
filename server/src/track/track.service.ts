@@ -29,8 +29,7 @@ export class TrackService {
     ): Promise<Track> {
         const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
         const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
-        const duration = Math.ceil(await getAudioDurationInSeconds(path.resolve(__dirname, '..', 'static', audioPath)));
-        const track = await this.trackModel.create({ ...dto, listens: 0, audio: audioPath, picture: picturePath, duration });
+        const track = await this.trackModel.create({ ...dto, listens: 0, audio: audioPath, picture: picturePath });
         return track;
     }
 

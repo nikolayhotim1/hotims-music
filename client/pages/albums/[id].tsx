@@ -15,6 +15,8 @@ import { useOnPictureUpdate } from '../../hooks/useOnPictureUpdate';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import AlbumTrackList from '../../components/album/AlbumTrackList';
 import FileUpload from '../../components/shared/FileUpload';
+import { fetchTracks } from '../../store/action-creators/track';
+import { useDispatch } from 'react-redux';
 
 interface AlbumPageProps {
     serverAlbum: IAlbum
@@ -29,8 +31,7 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
     const artistRef: any = useRef<HTMLSpanElement>();
     const { isEditable, handleClickOnEditIcon, handleOnBlurAlbumUpdate } = useOnBlurUpdate(thisAlbum, setThisAlbum);
     const { setPicture, setGlobTrackPicture, globTrackPicture } = useOnPictureUpdate(thisAlbum);
-
-    setActiveAlbum(serverAlbum);
+    const dispatch = useDispatch() as NextThunkDispatch;
 
     useEffect(() => {
         if (
@@ -42,8 +43,11 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
     }, [tracks]);
 
     useEffect(() => {
-        if (serverAlbum) {
+        if (serverAlbum.tracks.length > 0) {
             setActiveAlbum(serverAlbum);
+        } else {
+            dispatch(fetchTracks());
+            dispatch(fetchAlbums());
         }
     }, []);
 
@@ -66,6 +70,8 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
             </MainLayout>
         );
     }
+
+    setActiveAlbum(serverAlbum);
 
     return (
         <MainLayout

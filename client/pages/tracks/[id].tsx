@@ -50,6 +50,12 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
         }
     }, [picture]);
 
+    useEffect(() => {
+        if (audio) {
+            updateAudioHandler();
+        }
+    }, [audio]);
+
     const handleOnBlurTrackUpdate = async (
         fieldRef: TFieldRef,
         field: string
@@ -81,6 +87,15 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                 picture
             })
         );
+    };
+
+    const updateAudioHandler = async () => {
+        await dispatch(
+            updateTrack(track._id, {
+                audio
+            })
+        );
+        dispatch(fetchTracks());
     };
 
     const addComment = async () => {
@@ -203,7 +218,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                 </FileUpload>
                 <FileUpload
                     setFile={setAudio}
-                    setGlobImage={setGlobTrack}
+                    setGlobTrack={setGlobTrack}
                     accept='audio/*'
                 >
                     {globTrack || track.audio

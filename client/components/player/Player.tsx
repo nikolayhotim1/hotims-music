@@ -20,10 +20,10 @@ import { listenTrack } from '../../store/action-creators/track';
 let audio: HTMLAudioElement;
 
 const Player = () => {
-    const { pause, volume, active, currentTime, collapsed } = useTypedSelector(state => state.player);
+    const { pause, duration, volume, active, currentTime, collapsed } = useTypedSelector(state => state.player);
     const { tracks } = useTypedSelector(state => state.track);
     const { activeAlbum, albums } = useTypedSelector(state => state.album);
-    const { pauseTrack, playTrack, setVolume, setCurrentTime, setActiveTrack, setActiveAlbum, setCollapsed } = useActions();
+    const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setActiveTrack, setActiveAlbum, setCollapsed } = useActions();
     const dispatch = useDispatch() as NextThunkDispatch;
 
     useEffect(() => {
@@ -86,6 +86,9 @@ const Player = () => {
             audio.pause();
             audio.src = `http://localhost:5000/${active.audio}`;
             audio.volume = volume / 100;
+            audio.onloadedmetadata = () => {
+                setDuration((audio.duration));
+            };
             audio.currentTime = currentTime;
             audio.ontimeupdate = () => {
                 setCurrentTime(Math.ceil(audio.currentTime));
@@ -96,7 +99,7 @@ const Player = () => {
                 } catch (e: any) {
                     console.log(e.message);
                 }
-                if ((tracks.length === 1) || (activeAlbum.tracks.length === 1)) {
+                if ((tracks?.length === 1) || (activeAlbum?.tracks?.length === 1)) {
                     pauseTrack();
                     playTrack();
                 }
@@ -136,10 +139,10 @@ const Player = () => {
                 }
             </Button>
             <IconButton
-                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
+                disabled={!active && (tracks?.length === 0 || activeAlbum?.tracks?.length === 0)}
                 onClick={() => {
                     if (active) {
-                        if (tracks.length === 1) {
+                        if (tracks?.length === 1 || activeAlbum?.tracks?.length === 1) {
                             clearCurrentTime();
                         }
                         prevAudio();
@@ -149,7 +152,7 @@ const Player = () => {
                 <SkipPreviousIcon />
             </IconButton>
             <IconButton
-                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
+                disabled={!active && (tracks?.length === 0 || activeAlbum?.tracks?.length === 0)}
                 onClick={() => {
                     if (active) {
                         pauseTrack();
@@ -160,7 +163,7 @@ const Player = () => {
                 <StopIcon />
             </IconButton>
             <IconButton
-                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
+                disabled={!active && (tracks?.length === 0 || activeAlbum?.tracks?.length === 0)}
                 onClick={() => {
                     pause ? playTrack() : pauseTrack()
                 }}
@@ -171,10 +174,10 @@ const Player = () => {
                 }
             </IconButton>
             <IconButton
-                disabled={tracks?.length === 0 && activeAlbum?.tracks?.length === 0}
+                disabled={!active && (tracks?.length === 0 || activeAlbum?.tracks?.length === 0)}
                 onClick={() => {
                     if (active) {
-                        if (tracks.length === 1) {
+                        if (tracks?.length === 1 || activeAlbum?.tracks?.length === 1) {
                             clearCurrentTime();
                         }
                         nextAudio();
@@ -196,15 +199,13 @@ const Player = () => {
                 container
                 direction='column'
             >
-                <div className={s.name}>{active?.name}</div>
-                <div className={s.artist}>{active?.artist}</div>
-                {(active?.album?.name || activeAlbum?.name) &&
-                    <div className={s.album}>{active?.album?.name || activeAlbum?.name}</div>
-                }
+                <div className={s.name}>{active?.name || 'Track'}</div>
+                <div className={s.artist}>{active?.artist || activeAlbum?.author || 'Artist'}</div>
+                <div className={s.album}>{active?.album?.name || activeAlbum?.name || 'Album'}</div>
             </Grid>
             <TrackProgress
                 left={currentTime}
-                right={active?.duration || currentTime}
+                right={duration}
                 onChange={changeCurrentTime}
             />
             <VolumeUp className={s.volume} />

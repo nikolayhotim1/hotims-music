@@ -4,6 +4,7 @@ const initialState: PlayerState = {
     active: null,
     volume: 50,
     currentTime: 0,
+    duration: 0,
     pause: true,
     collapsed: true
 };
@@ -20,6 +21,8 @@ export const playerReducer = (
             return { ...state, active: action.payload, currentTime: 0 };
         case PlayerActionTypes.SET_CURRENT_TIME:
             return { ...state, currentTime: action.payload };
+        case PlayerActionTypes.SET_DURATION:
+            return { ...state, duration: action.payload };
         case PlayerActionTypes.SET_VOLUME:
             return { ...state, volume: action.payload };
         case PlayerActionTypes.SET_COLLAPSED:

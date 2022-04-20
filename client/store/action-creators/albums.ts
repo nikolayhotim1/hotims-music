@@ -36,7 +36,7 @@ export const fetchAlbumTracks = (id: string) => {
     return async (dispatch: Dispatch<AlbumAction>) => {
         try {
             const response = await axios.get(
-                `http://localhost:5000/albums/${id}/tracks`
+                `http://localhost:5000/albums/${id}`
             );
             dispatch({ type: AlbumActionTypes.FETCH_ALBUM_TRACKS, payload: response.data });
         } catch (e) {

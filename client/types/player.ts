@@ -4,6 +4,7 @@ export interface PlayerState {
     active: null | ITrack,
     volume: number,
     currentTime: number,
+    duration: number,
     pause: boolean,
     collapsed: boolean
 };
@@ -13,6 +14,7 @@ export enum PlayerActionTypes {
     PAUSE = 'PAUSE',
     SET_ACTIVE = 'SET_ACTIVE',
     SET_CURRENT_TIME = 'SET_CURRENT_TIME',
+    SET_DURATION = 'SET_DURATION',
     SET_VOLUME = 'SET_VOLUME',
     SET_COLLAPSED = 'SET_COLLAPSED'
 };
@@ -35,6 +37,11 @@ interface SetCurrentTimeAction {
     payload: number
 }
 
+interface SetDurationAction {
+    type: PlayerActionTypes.SET_DURATION,
+    payload: number
+}
+
 interface SetVolumeAction {
     type: PlayerActionTypes.SET_VOLUME,
     payload: number
@@ -49,5 +56,6 @@ export type PlayerAction = PlayAction
     | PauseAction
     | SetActiveAction
     | SetCurrentTimeAction
+    | SetDurationAction
     | SetVolumeAction
     | SetCollapsedAction;

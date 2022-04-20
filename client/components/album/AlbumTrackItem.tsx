@@ -2,7 +2,7 @@ import { FC } from 'react';
 import s from './styles/AlbumTrackItem.module.scss';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { fetchTracks, removeTrackFromAlbum } from '../../store/action-creators/track';
+import { removeTrackFromAlbum } from '../../store/action-creators/track';
 import { NextThunkDispatch } from '../../store';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { Delete, Pause, PlayArrow } from '@mui/icons-material';
@@ -11,6 +11,7 @@ import { ITrack } from '../../types/track';
 import { Card, Grid, IconButton } from '@mui/material';
 import formatTrackTime from '../../utils/formatTime';
 import SelectAlbum from './SelectAlbum';
+import { setActiveAlbum } from '../../store/action-creators/albums';
 
 interface TrackItemProps {
     track: ITrack,
@@ -22,7 +23,7 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
     const router = useRouter();
     const dispatch = useDispatch() as NextThunkDispatch;
     const { pauseTrack, playTrack, setActiveTrack } = useActions();
-    const { currentTime, pause } = useTypedSelector(state => state.player);
+    const { currentTime, duration, pause } = useTypedSelector(state => state.player);
     const { activeAlbum } = useTypedSelector(state => state.album);
 
     const play = (e: { stopPropagation: () => void; }) => {
@@ -42,7 +43,7 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
             if (albumId) {
                 await dispatch(removeTrackFromAlbum(albumId, track._id));
             }
-            await dispatch(fetchTracks());
+            setActiveAlbum(albumId);
         } catch (e: any) {
             console.log(e.message);
         }
@@ -82,8 +83,8 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
             </Grid>
             <SelectAlbum track={track} />
             {active
-                ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(track.duration)}</div>
-                : <div>{formatTrackTime(track.duration)}</div>
+                ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(duration)}</div>
+                : <div>{formatTrackTime(duration)}</div>
             }
             <IconButton
                 onClick={(e: any) => deleteTrackFromAlbum(e)}

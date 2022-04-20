@@ -6,5 +6,6 @@ export class CreateTrackDto {
     readonly text: string;
     readonly picture: string;
     readonly audio: string;
+    readonly duration: number;
     readonly album?: Album;
 };

@@ -21,7 +21,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
     const router = useRouter();
     const dispatch = useDispatch() as NextThunkDispatch;
     const { playTrack, pauseTrack, setActiveTrack } = useActions();
-    const { currentTime, pause } = useTypedSelector(state => state.player);
+    const { currentTime, duration, pause } = useTypedSelector(state => state.player);
     const { activeAlbum } = useTypedSelector(state => state.album);
 
     const play = (e: { stopPropagation: () => void; }) => {
@@ -80,8 +80,8 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
             </Grid>
             <SelectAlbum track={track} />
             {active
-                ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(track.duration)}</div>
-                : <div>{formatTrackTime(track.duration)}</div>
+                ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(duration)}</div>
+                : <div>{formatTrackTime(duration)}</div>
             }
             <IconButton
                 onClick={deleteTrack}

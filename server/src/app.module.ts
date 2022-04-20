@@ -1,3 +1,4 @@
+import { ConfigModule } from '@nestjs/config';
 import { FileModule } from './file/file.module';
 import { TrackModule } from './track/track.module';
 import { AlbumModule } from './album/album.module';
@@ -8,6 +9,9 @@ import * as path from 'path';
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            envFilePath: `.${process.env.NODE_ENV}.env`
+        }),
         ServeStaticModule.forRoot({ rootPath: path.resolve(__dirname, 'static') }),
         MongooseModule.forRoot(
             'mongodb+srv://Nikolay23:N!kolay23@cluster0.0h79z.mongodb.net/music-platform?retryWrites=true&w=majority'
