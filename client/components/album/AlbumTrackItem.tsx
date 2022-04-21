@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import s from './styles/AlbumTrackItem.module.scss';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { removeTrackFromAlbum } from '../../store/action-creators/track';
+import { fetchTracks, removeTrackFromAlbum } from '../../store/action-creators/track';
 import { NextThunkDispatch } from '../../store';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { Delete, Pause, PlayArrow } from '@mui/icons-material';
@@ -11,7 +11,7 @@ import { ITrack } from '../../types/track';
 import { Card, Grid, IconButton } from '@mui/material';
 import formatTrackTime from '../../utils/formatTime';
 import SelectAlbum from './SelectAlbum';
-import { setActiveAlbum } from '../../store/action-creators/albums';
+import { fetchAlbumTracks, setActiveAlbum } from '../../store/action-creators/albums';
 
 interface TrackItemProps {
     track: ITrack,
@@ -26,6 +26,12 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
     const { currentTime, duration, pause } = useTypedSelector(state => state.player);
     const { activeAlbum } = useTypedSelector(state => state.album);
 
+    useEffect(() => {
+        if (activeAlbum.tracks) {
+            setActiveAlbum(activeAlbum._id);
+        }
+    }, [activeAlbum.tracks]);
+
     const play = (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
         if (!active) {
@@ -38,12 +44,12 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
 
     const deleteTrackFromAlbum = async (e: { stopPropagation: () => void; }) => {
         e.stopPropagation();
+        const albumId = track?.album?._id ? track.album._id : activeAlbum?._id;
         try {
-            const albumId = track?.album?._id ? track.album._id : activeAlbum?._id;
             if (albumId) {
                 await dispatch(removeTrackFromAlbum(albumId, track._id));
             }
-            setActiveAlbum(albumId);
+            dispatch(setActiveAlbum(albumId));
         } catch (e: any) {
             console.log(e.message);
         }
@@ -84,10 +90,10 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
             <SelectAlbum track={track} />
             {active
                 ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(duration)}</div>
-                : <div>{formatTrackTime(duration)}</div>
+                : ''
             }
             <IconButton
-                onClick={(e: any) => deleteTrackFromAlbum(e)}
+                onClick={deleteTrackFromAlbum}
                 className={s.delete}
             >
                 <Delete />

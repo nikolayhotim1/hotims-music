@@ -3,22 +3,21 @@ import { NextThunkDispatch } from '../store';
 import { fetchAlbums, removeAlbum } from '../store/action-creators/albums';
 import { IAlbum } from '../types/albums';
 import { useActions } from './useActions';
-import { useTypedSelector } from './useTypedSelector';
 
 export const useDeleteAlbum = (album: IAlbum) => {
-	const { setActiveAlbum } = useActions();
-	const dispatch = useDispatch() as NextThunkDispatch;
-	const { removeResponse } = useTypedSelector(state => state.album);
+    const { setActiveAlbum } = useActions();
+    const dispatch = useDispatch() as NextThunkDispatch;
 
-	const deleteAlbum = async (e: any) => {
-		e.stopPropagation();
-		setActiveAlbum(album);
-		await dispatch(removeAlbum(album._id));
-		if (removeResponse?.error) {
-			return;
-		}
-		await dispatch(fetchAlbums());
-	};
+    const deleteAlbum = async (e: any) => {
+        try {
+            e.stopPropagation();
+            setActiveAlbum(album);
+            await dispatch(removeAlbum(album._id));
+            await dispatch(fetchAlbums());
+        } catch (e: any) {
+            console.log(e.message);
+        }
+    };
 
-	return { deleteAlbum };
+    return { deleteAlbum };
 };

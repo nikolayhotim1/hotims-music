@@ -81,7 +81,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
             <SelectAlbum track={track} />
             {active
                 ? <div>{formatTrackTime(currentTime)} / {formatTrackTime(duration)}</div>
-                : <div>{formatTrackTime(duration)}</div>
+                : ''
             }
             <IconButton
                 onClick={deleteTrack}

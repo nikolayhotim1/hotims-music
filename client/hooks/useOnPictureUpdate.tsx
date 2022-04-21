@@ -6,7 +6,7 @@ import { IAlbum } from '../types/albums';
 
 export const useOnPictureUpdate = (thisAlbum: IAlbum) => {
     const [picture, setPicture]: any = useState<File>();
-    const [globTrackPicture, setGlobTrackPicture] = useState(null);
+    const [globTrackPicture, setGlobTrackPicture] = useState();
     const dispatch = useDispatch() as NextThunkDispatch;
 
     const handlePictureUpdate = async () => {

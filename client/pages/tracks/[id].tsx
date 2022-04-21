@@ -39,6 +39,12 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
     const { error } = useTypedSelector(state => state.track);
 
     useEffect(() => {
+        if (track) {
+            axios.get(`http://localhost:5000/tracks/${track._id}`);
+        }
+    }, [track]);
+
+    useEffect(() => {
         if (isEditable) {
             currentField.current.focus();
         }
@@ -95,7 +101,6 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                 audio
             })
         );
-        dispatch(fetchTracks());
     };
 
     const addComment = async () => {

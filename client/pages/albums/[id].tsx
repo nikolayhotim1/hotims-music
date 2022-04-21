@@ -51,6 +51,12 @@ const AlbumPage: React.FC<AlbumPageProps> = ({ serverAlbum }) => {
         }
     }, []);
 
+    useEffect(() => {
+        if (globTrackPicture) {
+            setPicture();
+        }
+    }, [globTrackPicture]);
+
     const findTracksBelongedToThisAlbum = () => {
         const belongedTracks = tracks.filter(track => {
             return track.album?._id === thisAlbum._id;
