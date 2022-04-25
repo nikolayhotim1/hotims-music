@@ -1,0 +1,51 @@
+.player {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10px;
+  background-color: lightblue;
+  -webkit-transition: 1s all ease;
+  transition: 1s all ease;
+}
+
+.player_collapsed {
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+}
+
+.player .info {
+  width: 400px;
+  margin: 0 20px;
+}
+
+.player .info .name {
+  font-size: 16px;
+  color: #1976d2;
+}
+
+.player .info .artist {
+  font-size: 14px;
+}
+
+.player .volume {
+  margin-left: auto;
+}
+
+.picture {
+  width: 50px;
+  height: 50px;
+}
+
+.collapse {
+  position: absolute;
+  right: 10px;
+  top: -75%;
+}
+/*# sourceMappingURL=Player.module.css.map */

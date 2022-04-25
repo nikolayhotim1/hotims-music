@@ -19,6 +19,10 @@ import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import HomeIcon from '@mui/icons-material/Home';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import AlbumIcon from '@mui/icons-material/Album';
+import { Grid } from '@mui/material';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import s from './styles/Navbar.module.scss';
 
 const menuItems = [
     { text: 'Home Page', path: '/', Icon: HomeIcon },
@@ -58,6 +62,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function Navbar() {
+    const { data: session, status } = useSession();
     const router = useRouter();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -84,15 +89,68 @@ export default function Navbar() {
                     >
                         <QueueMusicIcon />
                     </IconButton>
-                    <Typography
-                        variant='h6'
-                        noWrap
-                        component='div'
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => router.push('/')}
+                    <Grid
+                        // className={`s.${!session && status === 'loading' ? 'loading' : 'loaded'}`}
+                        container
+                        display='flex'
+                        justifyContent='space-between'
+                        alignItems='center'
                     >
-                        HOTIMS MUSIC
-                    </Typography>
+                        <Typography
+                            variant='h6'
+                            noWrap
+                            component='div'
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => router.push('/')}
+                        >
+                            HOTIMS MUSIC
+                        </Typography>
+                        <Grid display='flex'>
+                            {!session && status == 'unauthenticated' && (
+                                <div className={s.auth}>
+                                    <AccountBoxIcon className={s.picture} />
+                                    <Typography
+                                        variant='h6'
+                                        noWrap
+                                        component='div'
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => router.push('/api/auth/signin')}
+                                    // onClick={(e: any) => {
+                                    //     e.preventDefault();
+                                    //     signIn('github');
+                                    // }}
+                                    >
+                                        SIGN IN
+                                    </Typography>
+                                </div>
+                            )}
+                            {session && status == 'authenticated' && (
+                                <div className={s.auth}>
+                                    {session.user?.image
+                                        ? <img
+                                            className={s.picture}
+                                            src={session.user.image}
+                                            alt='User photo'
+                                        />
+                                        : <AccountBoxIcon className={s.picture} />
+                                    }
+                                    <Typography
+                                        variant='h6'
+                                        noWrap
+                                        component='div'
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => router.push('/api/auth/signout')}
+                                    // onClick={(e: any) => {
+                                    //     e.preventDefault();
+                                    //     signOut();
+                                    // }}
+                                    >
+                                        SIGN OUT
+                                    </Typography>
+                                </div>
+                            )}
+                        </Grid>
+                    </Grid>
                 </Toolbar>
             </AppBar>
             <Drawer

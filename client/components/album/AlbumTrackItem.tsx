@@ -11,7 +11,7 @@ import { ITrack } from '../../types/track';
 import { Card, Grid, IconButton } from '@mui/material';
 import formatTrackTime from '../../utils/formatTime';
 import SelectAlbum from './SelectAlbum';
-import { fetchAlbumTracks, setActiveAlbum } from '../../store/action-creators/albums';
+import { setActiveAlbum } from '../../store/action-creators/albums';
 
 interface TrackItemProps {
     track: ITrack,
@@ -83,7 +83,7 @@ const AlbumTrackItem: FC<TrackItemProps> = ({ track, itemIndex, active = false }
                 <div className={s.name}>{track.name}</div>
                 <div className={s.artist}>{track.artist}</div>
                 {activeAlbum?.name && (
-                    <div className={s.album}>{activeAlbum.name}</div>
+                    <div className={s.album}>Album: {activeAlbum.name}</div>
                 )}
                 <div className={s.listens}>Listens: {track.listens}</div>
             </Grid>

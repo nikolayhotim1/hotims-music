@@ -14,7 +14,7 @@ export const albumReducer = (
         case AlbumActionTypes.FETCH_ALBUMS:
             return { ...state, albums: action.payload };
         case AlbumActionTypes.FETCH_ALBUMS_ERROR:
-            return { ...state };
+            return { ...state, error: action.payload };
         case AlbumActionTypes.FETCH_ALBUM_TRACKS:
             return { ...state, albums: action.payload };
         case AlbumActionTypes.FETCH_ALBUM_TRACKS_ERROR:

@@ -44,7 +44,7 @@ export const removeTrack = (id: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.REMOVE_TRACK_ERROR,
-                payload: 'We got an error removing track'
+                payload: 'An error occurred while removing this track'
             });
         }
     };
@@ -67,7 +67,7 @@ export const removeTrackFromAlbum = (albumId: any, trackId: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.REMOVE_TRACK_ERROR,
-                payload: 'We got an error removing track'
+                payload: 'An error occurred while removing this track from the album'
             });
         }
     };
@@ -90,7 +90,7 @@ export const addTrackToAlbum = (albumId: string, trackId: string) => {
         } catch (e) {
             dispatch({
                 type: TrackActionTypes.ADD_TRACK_TO_ALBUM_ERROR,
-                payload: 'We got an error adding this track into the album'
+                payload: 'An error occurred while adding this track into the album'
             });
         }
     };
@@ -107,7 +107,7 @@ export const listenTrack = (trackId: string) => {
         } catch (e: any) {
             dispatch({
                 type: TrackActionTypes.LISTEN_TRACK_ERROR,
-                payload: `We got an error listen this track: ${e.message}`
+                payload: `An error occurred while listen this track: ${e.message}`
             });
         }
     };
@@ -131,7 +131,7 @@ export const updateTrack = (trackId: string, data: ITrackUpdateData | any) => {
         } catch (e: any) {
             dispatch({
                 type: TrackActionTypes.UPDATE_TRACK_ERROR,
-                payload: `We got an error updating this track: ${e.message}`
+                payload: `An error occurred while updating this track: ${e.message}`
             });
         }
     };

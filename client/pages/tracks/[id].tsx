@@ -16,6 +16,7 @@ import SelectAlbum from '../../components/album/SelectAlbum';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import FileUpload from '../../components/shared/FileUpload';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useSession } from 'next-auth/react';
 
 interface TrackPageProps {
     serverTrack: ITrack
@@ -37,6 +38,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
     const artistRef: any = useRef<HTMLSpanElement>();
     const textRef: any = useRef<HTMLSpanElement>();
     const { error } = useTypedSelector(state => state.track);
+    const { data: session } = useSession();
 
     useEffect(() => {
         if (track) {
@@ -106,7 +108,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
     const addComment = async () => {
         try {
             const response = await axios.post('http://localhost:5000/tracks/comment', {
-                username: username.value,
+                username: session?.user?.name || 'Anonymous',
                 text: text.value,
                 trackId: track._id
             });
@@ -249,11 +251,6 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
                 container
                 className={s.comment}
             >
-                <TextField
-                    {...username}
-                    label='Your name'
-                    fullWidth
-                />
                 <TextField
                     {...text}
                     label='Comment'

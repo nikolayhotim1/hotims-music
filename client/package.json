@@ -14,13 +14,19 @@
     "@fluentui/make-styles": "^9.0.0-beta.3",
     "@mui/icons-material": "^5.4.4",
     "@mui/material": "^5.4.4",
+    "@next-auth/mongodb-adapter": "^1.0.3",
+    "@next-auth/prisma-adapter": "^1.0.3",
+    "@prisma/client": "^3.12.0",
     "@redux-devtools/extension": "^3.2.2",
     "@types/react-redux": "^7.1.23",
     "axios": "^0.26.0",
     "clsx": "^1.1.1",
     "get-audio-duration": "^3.0.1",
+    "mongodb": "^4.5.0",
     "next": "12.1.0",
+    "next-auth": "^4.3.3",
     "next-redux-wrapper": "^7.0.5",
+    "nodemailer": "^6.7.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "^7.2.6",
@@ -28,7 +34,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
-    "sass": "^1.49.9",
+    "sass": "^1.50.1",
     "scss": "^0.2.4"
   },
   "devDependencies": {
@@ -36,6 +42,7 @@
     "@types/react": "17.0.39",
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0",
+    "prisma": "^3.12.0",
     "typescript": "4.6.2"
   }
 }

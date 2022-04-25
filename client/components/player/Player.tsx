@@ -59,10 +59,10 @@ const Player = () => {
                 let nextTrackIndex = tracks.indexOf(active) + 1;
                 nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : 0;
                 setActiveTrack(tracks[nextTrackIndex]);
-            } else if (activeAlbum.tracks.length) {
-                let nextTrackIndex = activeAlbum.tracks.indexOf(active) + 1;
-                nextTrackIndex = activeAlbum.tracks[nextTrackIndex] ? nextTrackIndex : 0;
-                setActiveTrack(activeAlbum.tracks[nextTrackIndex]);
+            } else if (activeAlbum?.tracks.length) {
+                let nextTrackIndex = activeAlbum?.tracks.indexOf(active) + 1;
+                nextTrackIndex = activeAlbum?.tracks[nextTrackIndex] ? nextTrackIndex : 0;
+                setActiveTrack(activeAlbum?.tracks[nextTrackIndex]);
             }
         }
     };
@@ -73,10 +73,10 @@ const Player = () => {
                 let nextTrackIndex = tracks.indexOf(active) - 1;
                 nextTrackIndex = tracks[nextTrackIndex] ? nextTrackIndex : tracks.length - 1;
                 setActiveTrack(tracks[nextTrackIndex]);
-            } else if (activeAlbum.tracks.length) {
-                let nextTrackIndex = activeAlbum.tracks.indexOf(active) - 1;
-                nextTrackIndex = activeAlbum.tracks[nextTrackIndex] ? nextTrackIndex : activeAlbum.tracks.length - 1;
-                setActiveTrack(activeAlbum.tracks[nextTrackIndex]);
+            } else if (activeAlbum?.tracks.length) {
+                let nextTrackIndex = activeAlbum?.tracks.indexOf(active) - 1;
+                nextTrackIndex = activeAlbum?.tracks[nextTrackIndex] ? nextTrackIndex : activeAlbum?.tracks.length - 1;
+                setActiveTrack(activeAlbum?.tracks[nextTrackIndex]);
             }
         }
     };
@@ -200,8 +200,7 @@ const Player = () => {
                 direction='column'
             >
                 <div className={s.name}>{active?.name || 'Track'}</div>
-                <div className={s.artist}>{active?.artist || activeAlbum?.author || 'Artist'}</div>
-                <div className={s.album}>{active?.album?.name || activeAlbum?.name || 'Album'}</div>
+                <div className={s.artist}>{active?.artist || 'Artist'}</div>
             </Grid>
             <TrackProgress
                 left={currentTime}

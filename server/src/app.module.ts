@@ -6,6 +6,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { UserModule } from './user/user.module';
 
 @Module({
     imports: [
@@ -13,12 +14,11 @@ import * as path from 'path';
             envFilePath: `.${process.env.NODE_ENV}.env`
         }),
         ServeStaticModule.forRoot({ rootPath: path.resolve(__dirname, 'static') }),
-        MongooseModule.forRoot(
-            'mongodb+srv://Nikolay23:N!kolay23@cluster0.0h79z.mongodb.net/music-platform?retryWrites=true&w=majority'
-        ),
+        MongooseModule.forRoot(process.env.DB_URL),
         AlbumModule,
         TrackModule,
-        FileModule
+        FileModule,
+        UserModule
     ]
 })
 export class AppModule { };

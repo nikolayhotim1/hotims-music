@@ -10,8 +10,6 @@ import { Track, TrackDocument } from './schemas/track.schema';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { getAudioDurationInSeconds } from 'get-audio-duration';
-import * as path from 'path';
 
 @Injectable()
 export class TrackService {

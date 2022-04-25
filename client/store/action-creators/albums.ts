@@ -6,11 +6,14 @@ export const fetchAlbums = () => {
     return async (dispatch: Dispatch<AlbumAction>) => {
         try {
             const response = await axios.get('http://localhost:5000/albums');
-            dispatch({ type: AlbumActionTypes.FETCH_ALBUMS, payload: response.data });
+            dispatch({
+                type: AlbumActionTypes.FETCH_ALBUMS,
+                payload: response.data
+            });
         } catch (e) {
             dispatch({
                 type: AlbumActionTypes.FETCH_ALBUMS_ERROR,
-                payload: 'We got an error loading albums'
+                payload: 'An error occurred while loading albums'
             });
         }
     };
@@ -22,11 +25,14 @@ export const searchAlbums = (query: string) => {
             const response = await axios.get(
                 `http://localhost:5000/albums/search?query=${query}`
             );
-            dispatch({ type: AlbumActionTypes.FETCH_ALBUMS, payload: response.data });
+            dispatch({
+                type: AlbumActionTypes.FETCH_ALBUMS,
+                payload: response.data
+            });
         } catch (e) {
             dispatch({
                 type: AlbumActionTypes.FETCH_ALBUMS_ERROR,
-                payload: 'We got an error searching albums'
+                payload: 'An error occurred while searching albums'
             });
         }
     };
@@ -38,11 +44,14 @@ export const fetchAlbumTracks = (id: string) => {
             const response = await axios.get(
                 `http://localhost:5000/albums/${id}`
             );
-            dispatch({ type: AlbumActionTypes.FETCH_ALBUM_TRACKS, payload: response.data });
+            dispatch({
+                type: AlbumActionTypes.FETCH_ALBUM_TRACKS,
+                payload: response.data
+            });
         } catch (e) {
             dispatch({
                 type: AlbumActionTypes.FETCH_ALBUM_TRACKS_ERROR,
-                payload: 'We got an error loading album tracks'
+                payload: 'An error occurred while loading this album tracks'
             });
         }
     };
@@ -52,11 +61,14 @@ export const removeAlbum = (id: string) => {
     return async (dispatch: Dispatch<AlbumAction>) => {
         try {
             const response = await axios.delete(`http://localhost:5000/albums/${id}`);
-            dispatch({ type: AlbumActionTypes.REMOVE_ALBUM, payload: response.data });
+            dispatch({
+                type: AlbumActionTypes.REMOVE_ALBUM,
+                payload: response.data
+            });
         } catch (e: any) {
             dispatch({
                 type: AlbumActionTypes.REMOVE_ALBUM_ERROR,
-                payload: e.message
+                payload: 'An error occurred while removing this album'
             });
         }
     };
@@ -85,7 +97,7 @@ export const updateAlbum = (albumId: string, data: any) => {
         } catch (e: any) {
             dispatch({
                 type: AlbumActionTypes.UPDATE_ALBUM_ERROR,
-                payload: `We got an error updating this album: ${e.message}`
+                payload: `An error occurred while updating this album: ${e.message}`
             });
         }
     };

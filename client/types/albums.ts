@@ -16,7 +16,7 @@ export interface IAlbumUpdateData {
 
 export interface AlbumState {
     albums: IAlbum[],
-    activeAlbum: IAlbum,
+    activeAlbum: IAlbum | null,
     error: string
 };
 
