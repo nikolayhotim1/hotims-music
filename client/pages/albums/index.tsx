@@ -55,14 +55,6 @@ const index = () => {
         }, 500));
     };
 
-    if (error) {
-        return (
-            <MainLayout>
-                <h1>{error}</h1>
-            </MainLayout>
-        );
-    }
-
     return (
         <MainLayout title={'Hotims Music - Album List'}>
             <Grid

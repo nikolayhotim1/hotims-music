@@ -6,7 +6,6 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
-import { UserModule } from './user/user.module';
 
 @Module({
     imports: [
@@ -17,8 +16,7 @@ import { UserModule } from './user/user.module';
         MongooseModule.forRoot(process.env.DB_URL),
         AlbumModule,
         TrackModule,
-        FileModule,
-        UserModule
+        FileModule
     ]
 })
 export class AppModule { };
