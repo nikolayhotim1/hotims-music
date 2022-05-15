@@ -20,12 +20,12 @@ import HomeIcon from '@mui/icons-material/Home';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import AlbumIcon from '@mui/icons-material/Album';
 import { Grid } from '@mui/material';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import s from './styles/Navbar.module.scss';
 
 const menuItems = [
-    { text: 'Home Page', path: '/', Icon: HomeIcon },
+    { text: 'Home', path: '/', Icon: HomeIcon },
     { text: 'Track List', path: '/tracks', Icon: AudiotrackIcon },
     { text: 'Album List', path: '/albums', Icon: AlbumIcon }
 ];
@@ -90,7 +90,6 @@ export default function Navbar() {
                         <QueueMusicIcon />
                     </IconButton>
                     <Grid
-                        // className={`s.${!session && status === 'loading' ? 'loading' : 'loaded'}`}
                         container
                         display='flex'
                         justifyContent='space-between'
@@ -115,10 +114,6 @@ export default function Navbar() {
                                         component='div'
                                         style={{ cursor: 'pointer' }}
                                         onClick={() => router.push('/api/auth/signin')}
-                                    // onClick={(e: any) => {
-                                    //     e.preventDefault();
-                                    //     signIn('github');
-                                    // }}
                                     >
                                         SIGN IN
                                     </Typography>
@@ -140,10 +135,6 @@ export default function Navbar() {
                                         component='div'
                                         style={{ cursor: 'pointer' }}
                                         onClick={() => router.push('/api/auth/signout')}
-                                    // onClick={(e: any) => {
-                                    //     e.preventDefault();
-                                    //     signOut();
-                                    // }}
                                     >
                                         SIGN OUT
                                     </Typography>
